@@ -57,4 +57,28 @@ public class BoardTest {
 		assertEquals("The board should have moved a knight", b.board[2][2], b.blackKnight);
 		assertEquals("There should be no piece in the initial spot", b.board[0][1], 0);
 	}
+
+	@Test
+	public void testConvertMoveToServerNotation00() throws Exception {
+		String serverMove = b.convertMoveToServerNotation(6, 3, 5, 3);
+		assertEquals("The move of a pawn from [6][3] to [5][3] must be Pd2d3", "Pd2d3", serverMove);
+	}
+
+	@Test
+	public void testConvertMoveToServerNotation01() throws Exception {
+		String serverMove = b.convertMoveToServerNotation(7, 1, 5, 2);
+		assertEquals("The move of a knight from [7][1] to [5][2] must be Nb1c3", "Nb1c3", serverMove);
+	}
+
+	@Test
+	public void testConvertMoveToServerNotation02() throws Exception {
+		String serverMove = b.convertMoveToServerNotation(1, 7, 3, 7);
+		assertEquals("The move of a pawn from [1][7] to [3][7] must be Ph7h5", "Ph7h5", serverMove);
+	}
+
+	@Test
+	public void testConvertMoveToServerNotation03() throws Exception {
+		String serverMove = b.convertMoveToServerNotation(0, 1, 2, 2);
+		assertEquals("The move of a knight from [0][1] to [2][2] must be Nb8c6", "Nb8c6", serverMove);
+	}
 }

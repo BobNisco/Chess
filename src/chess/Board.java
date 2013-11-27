@@ -195,6 +195,7 @@ public class Board {
 		serverNotation += convertRowToServerRow(startRow);
 		serverNotation += fileIntegerToFile.get(endFile);
 		serverNotation += convertRowToServerRow(endRow);
+		// TODO: Handle promotion
 		return serverNotation;
 	}
 
