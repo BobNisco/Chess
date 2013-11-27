@@ -37,6 +37,7 @@ public class Board {
 	public final int blackBishop = -3;
 	public final int blackKnight = -2;
 	public final int blackPawn = -1;
+	public final int empty = 0;
 
 	public Board() {
 		this.board = new int[8][8];
@@ -82,6 +83,18 @@ public class Board {
 		this.board[6][5] = whitePawn;
 		this.board[6][6] = whitePawn;
 		this.board[6][7] = whitePawn;
+
+		// Initialize all the other states as empty.
+		// Even though Java will automatically set it to 0, this is here
+		// just in case we ever change the representation of empty to
+		// something else
+		for (int i = 0; i < this.board.length; i++) {
+			for (int j = 0; j < this.board[i].length; j++) {
+				if (this.board[i][j] == 0) {
+					this.board[i][j] = this.empty;
+				}
+			}
+		}
 	}
 
 
@@ -166,7 +179,7 @@ public class Board {
 		// Move the piece from the original space to the new space
 		this.board[endRow][endFile] = oldBoard[startRow][startFile];
 		// Set the original space to empty
-		this.board[startRow][startFile] = 0;
+		this.board[startRow][startFile] = this.empty;
 	}
 
 	/**
