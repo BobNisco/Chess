@@ -1,3 +1,5 @@
+package chess;
+
 /**
  * A class representing the JSON response from the game server
  * as outlined in the assignment PDF.

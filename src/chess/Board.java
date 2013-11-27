@@ -1,3 +1,5 @@
+package chess;
+
 import java.util.HashMap;
 
 /**
@@ -115,10 +117,22 @@ public class Board {
 			// Type of piece for promotion ∈ {Q, R, B, N}
 		}
 
+		/* This is what the start board is with coordinates
+		-4(0,0) -2(0,1) -3(0,2) -5(0,3) -6(0,4) -3(0,5) -2(0,6) -4(0,7)
+		-1(1,0) -1(1,1) -1(1,2) -1(1,3) -1(1,4) -1(1,5) -1(1,6) -1(1,7)
+		0(2,0) 0(2,1) 0(2,2) 0(2,3) 0(2,4) 0(2,5) 0(2,6) 0(2,7)
+		0(3,0) 0(3,1) 0(3,2) 0(3,3) 0(3,4) 0(3,5) 0(3,6) 0(3,7)
+		0(4,0) 0(4,1) 0(4,2) 0(4,3) 0(4,4) 0(4,5) 0(4,6) 0(4,7)
+		0(5,0) 0(5,1) 0(5,2) 0(5,3) 0(5,4) 0(5,5) 0(5,6) 0(5,7)
+		1(6,0) 1(6,1) 1(6,2) 1(6,3) 1(6,4) 1(6,5) 1(6,6) 1(6,7)
+		4(7,0) 2(7,1) 3(7,2) 6(7,3) 5(7,4) 3(7,5) 2(7,6) 4(7,7)
+		 */
+
+		int[][] oldBoard = this.board.clone();
 		// Move the piece from the original space to the new space
-		this.board[endFile][endRow] = this.board[startFile][startRow];
+		this.board[endRow][endFile] = oldBoard[startRow][startFile];
 		// Set the original space to empty
-		this.board[startFile][startRow] = 0;
+		this.board[startRow][startFile] = 0;
 	}
 
 	/**
