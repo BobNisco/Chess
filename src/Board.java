@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * A class to represent the Chess board (8 files by 8 ranks).
  * Also holds the current state of the game.
@@ -7,9 +9,19 @@ public class Board {
 	 * The board's spaces represented by integers for the pieces
 	 */
 	public int[][] board;
+	/**
+	 * Boolean that tells us if it is our turn or not
+	 */
 	public boolean isOurTurn;
 
-	// All of the pieces
+	/**
+	 * Some mappings that we'll need to convert what we get from the server
+	 * into our own representation of the board
+	 */
+	public static HashMap<String, Integer> fileToFileIntegers = initFileToFileIntegers();
+	/**
+	 * The integer values we'll use for our pieces
+	 */
 	public final int whiteKing = 6;
 	public final int whiteQueen = 5;
 	public final int whiteRook = 4;
@@ -67,6 +79,46 @@ public class Board {
 		this.board[6][5] = whitePawn;
 		this.board[6][6] = whitePawn;
 		this.board[6][7] = whitePawn;
+	}
+
+
+	/**
+	 * Initializes the file to file integers hashmap
+	 * @return
+	 */
+	public static HashMap<String, Integer> initFileToFileIntegers() {
+		HashMap<String, Integer> r = new HashMap<String, Integer>();
+		r.put("a", 0);
+		r.put("b", 1);
+		r.put("c", 2);
+		r.put("d", 3);
+		r.put("e", 4);
+		r.put("f", 5);
+		r.put("g", 6);
+		r.put("h", 7);
+		return r;
+	}
+
+	public void handleMove(Response move) {
+		// Parse the input as per our rules
+		// For example, a move may be Pd2d3 or Nb1c3. (both opening moves)
+		int startFile = fileToFileIntegers.get(move.lastmove.substring(1, 2));
+		// We have a zero-indexed int[][], but the data returned to us is
+		// one-indexed, we fix that by subtracting one from the row
+		int startRow = Integer.parseInt(move.lastmove.substring(2, 3)) - 1;
+		int endFile = fileToFileIntegers.get(move.lastmove.substring(3, 4));
+		int endRow = Integer.parseInt(move.lastmove.substring(4, 5)) - 1;
+
+		if (move.lastmove.length() == 6) {
+			// TODO: Handle the promotion
+			// For example Pb7b8Q where the pawn is promoted to a queen.
+			// Type of piece for promotion ∈ {Q, R, B, N}
+		}
+
+		// Move the piece from the original space to the new space
+		this.board[endFile][endRow] = this.board[startFile][startRow];
+		// Set the original space to empty
+		this.board[startFile][startRow] = 0;
 	}
 
 	/**
