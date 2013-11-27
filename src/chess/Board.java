@@ -21,6 +21,7 @@ public class Board {
 	 * into our own representation of the board
 	 */
 	public static HashMap<String, Integer> fileToFileIntegers = initFileToFileIntegers();
+	public static HashMap<Integer, String> fileIntegerToFile = initFileIntegersToFile();
 	/**
 	 * The integer values we'll use for our pieces
 	 */
@@ -101,6 +102,39 @@ public class Board {
 		return r;
 	}
 
+	public static HashMap<Integer, String> initFileIntegersToFile() {
+		HashMap<Integer, String> r = new HashMap<Integer, String>();
+		r.put(0, "a");
+		r.put(1, "b");
+		r.put(2, "c");
+		r.put(3, "d");
+		r.put(4, "e");
+		r.put(5, "f");
+		r.put(6, "g");
+		r.put(7, "h");
+		return r;
+	}
+
+	public String convertIntToServerChar(int piece) {
+		piece = Math.abs(piece);
+		switch (piece) {
+			case 1:
+				return "P";
+			case 2:
+				return "N";
+			case 3:
+				return "B";
+			case 4:
+				return "R";
+			case 5:
+				return "Q";
+			case 6:
+				return "K";
+			default:
+				return "";
+		}
+	}
+
 	public void handleMove(Response move) {
 		// Parse the input as per our rules
 		// For example, a move may be Pd2d3 or Nb1c3. (both opening moves)
@@ -146,6 +180,22 @@ public class Board {
 		// Fix the off-by-one
 		int ourRow = Integer.parseInt(row) - 1;
 		return 7 - ourRow;
+	}
+
+	private int convertRowToServerRow(int row) {
+		return 8 - row;
+	}
+
+	public String convertMoveToServerNotation(int startRow, int startFile, int endRow, int endFile) {
+		String serverNotation = "";
+		// Get the piece's letter notation and add it to the return string
+		serverNotation += convertIntToServerChar(this.board[startRow][startFile]);
+		// Get the file notation for the start row
+		serverNotation += fileIntegerToFile.get(startFile);
+		serverNotation += convertRowToServerRow(startRow);
+		serverNotation += fileIntegerToFile.get(endFile);
+		serverNotation += convertRowToServerRow(endRow);
+		return serverNotation;
 	}
 
 	/**
