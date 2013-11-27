@@ -105,9 +105,9 @@ public class Board {
 		int startFile = fileToFileIntegers.get(move.lastmove.substring(1, 2));
 		// We have a zero-indexed int[][], but the data returned to us is
 		// one-indexed, we fix that by subtracting one from the row
-		int startRow = Integer.parseInt(move.lastmove.substring(2, 3)) - 1;
+		int startRow = convertServerRow(move.lastmove.substring(2, 3));
 		int endFile = fileToFileIntegers.get(move.lastmove.substring(3, 4));
-		int endRow = Integer.parseInt(move.lastmove.substring(4, 5)) - 1;
+		int endRow = convertServerRow(move.lastmove.substring(4, 5));
 
 		if (move.lastmove.length() == 6) {
 			// TODO: Handle the promotion
@@ -119,6 +119,19 @@ public class Board {
 		this.board[endFile][endRow] = this.board[startFile][startRow];
 		// Set the original space to empty
 		this.board[startFile][startRow] = 0;
+	}
+
+	/**
+	 * The server uses a grid that goes from 8 to 1 from top to bottom
+	 * our int[][] goes from 0 to 7 from top to bottom. This function
+	 * converts the representation
+	 * @param row
+	 * @return
+	 */
+	private int convertServerRow(String row) {
+		// Fix the off-by-one
+		int ourRow = Integer.parseInt(row) - 1;
+		return 7 - ourRow;
 	}
 
 	/**
