@@ -24,8 +24,7 @@ public class Move {
 
 	@Override
 	public String toString() {
-		return "Start: (" + this.start.rank + ", " + this.start.file +
-				") End: (" + this.end.rank + ", " + this.end.file + ")";
+		return "Start: " + this.start.toString() + " End: " + this.end.toString();
 	}
 
 	@Override
@@ -39,10 +38,8 @@ public class Move {
 
 		Move move = (Move) m;
 
-		if (move.start.file == this.start.file &&
-			move.start.rank == this.start.rank &&
-			move.end.file == this.end.file &&
-			move.end.rank == this.end.rank) {
+		if (move.start.equals(this.start) &&
+			move.end.equals(this.end)) {
 			return true;
 		}
 		return false;
