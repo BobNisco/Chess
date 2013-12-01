@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 public class GenerateSuccessors {
 
+	/**
+	 * Generates all of the possible moves for a pawn given a board
+	 * and the color of the player
+	 * @param b the board
+	 * @param color the color of the board
+	 * @return An ArrayList<Move> of all possible moves for a given
+	 * player's pawns
+	 */
 	public static ArrayList<Move> pawn(Board b, int color) {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		// Set the piece we want to look for to the WhitePawn
@@ -19,12 +27,14 @@ public class GenerateSuccessors {
 		int startingRank = 4;
 		int endingRank = 6;
 		int forwardMove = -1;
+		int opponentColor = Board.black;
 		if (color == Board.black) {
 			// Handle the case of black
 			beginningRank = 1;
 			startingRank = 2;
 			endingRank = 4;
 			forwardMove = 1;
+			opponentColor = Board.white;
 		}
 
 		for (Position p : pieces) {
@@ -49,12 +59,12 @@ public class GenerateSuccessors {
 			// Handle any possible diagonal captures
 			if (p.file < 7) {
 				Position possiblePosition = new Position(p.rank + forwardMove, p.file + 1);
-				if (b.spaceHasOpponent(possiblePosition, Board.white)) {
+				if (b.spaceHasOpponent(possiblePosition, opponentColor)) {
 					moves.add(new Move(p, possiblePosition));
 				}
 			} else if (p.file > 0) {
 				Position possiblePosition = new Position(p.rank + forwardMove, p.file - 1);
-				if (b.spaceHasOpponent(possiblePosition, Board.white)) {
+				if (b.spaceHasOpponent(possiblePosition, opponentColor)) {
 					moves.add(new Move(p, possiblePosition));
 				}
 			}
