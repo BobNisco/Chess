@@ -60,25 +60,29 @@ public class BoardTest {
 
 	@Test
 	public void testConvertMoveToServerNotation00() throws Exception {
-		String serverMove = MoveHandler.convertMoveToServerNotation(b, 6, 3, 5, 3);
+		Move m = new Move(6, 3, 5, 3);
+		String serverMove = MoveHandler.convertMoveToServerNotation(b, m);
 		assertEquals("The move of a pawn from [6][3] to [5][3] must be Pd2d3", "Pd2d3", serverMove);
 	}
 
 	@Test
 	public void testConvertMoveToServerNotation01() throws Exception {
-		String serverMove = MoveHandler.convertMoveToServerNotation(b, 7, 1, 5, 2);
+		Move m = new Move(7, 1, 5, 2);
+		String serverMove = MoveHandler.convertMoveToServerNotation(b, m);
 		assertEquals("The move of a knight from [7][1] to [5][2] must be Nb1c3", "Nb1c3", serverMove);
 	}
 
 	@Test
 	public void testConvertMoveToServerNotation02() throws Exception {
-		String serverMove = MoveHandler.convertMoveToServerNotation(b, 1, 7, 3, 7);
+		Move m = new Move(1, 7, 3, 7);
+		String serverMove = MoveHandler.convertMoveToServerNotation(b, m);
 		assertEquals("The move of a pawn from [1][7] to [3][7] must be Ph7h5", "Ph7h5", serverMove);
 	}
 
 	@Test
 	public void testConvertMoveToServerNotation03() throws Exception {
-		String serverMove = MoveHandler.convertMoveToServerNotation(b, 0, 1, 2, 2);
+		Move m = new Move(0, 1, 2, 2);
+		String serverMove = MoveHandler.convertMoveToServerNotation(b, m);
 		assertEquals("The move of a knight from [0][1] to [2][2] must be Nb8c6", "Nb8c6", serverMove);
 	}
 }
