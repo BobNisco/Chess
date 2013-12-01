@@ -62,7 +62,8 @@ public class GenerateSuccessors {
 				if (b.spaceHasOpponent(possiblePosition, opponentColor)) {
 					moves.add(new Move(p, possiblePosition));
 				}
-			} else if (p.file > 0) {
+			}
+			if (p.file > 0) {
 				Position possiblePosition = new Position(p.rank + forwardMove, p.file - 1);
 				if (b.spaceHasOpponent(possiblePosition, opponentColor)) {
 					moves.add(new Move(p, possiblePosition));
