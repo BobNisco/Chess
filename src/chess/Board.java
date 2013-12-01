@@ -114,6 +114,10 @@ public class Board {
 		return false;
 	}
 
+	public int currentPieceInPosition(Position p) {
+		return this.board[p.rank][p.file];
+	}
+
 	/**
 	 * Prints out the chess board in a nice 2D grid
 	 * @return string representing the state of the grid

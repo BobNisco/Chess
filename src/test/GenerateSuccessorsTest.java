@@ -98,7 +98,7 @@ public class GenerateSuccessorsTest {
 	}
 
 	@Test
-	public void testPawnTakeoverWhite() throws  Exception {
+	public void testPawnTakeoverWhite() throws Exception {
 		// Move a black pawn to a space that will allow for a takeover
 		// by a white pawn from an initial starting point
 		b.board[5][0] = Board.blackPawn;
@@ -122,5 +122,91 @@ public class GenerateSuccessorsTest {
 		expected.add(new Move(6, 7, 4, 7));
 		expected.add(new Move(6, 7, 5, 7));
 		assertEquals(expected, pawnMoves);
+	}
+
+	@Test
+	public void testRookInitialBlack() throws Exception {
+		ArrayList<Move> rookMoves = GenerateSuccessors.rook(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		assertEquals(expected, rookMoves);
+	}
+
+	@Test
+	public void testRookInitialWhite() throws Exception {
+		ArrayList<Move> rookMoves = GenerateSuccessors.rook(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		assertEquals(expected, rookMoves);
+	}
+
+	@Test
+	public void testRookMoveBlack00() throws Exception {
+		// Remove a single pawn in front of a rook
+		b.board[1][0] = Board.empty;
+		ArrayList<Move> rookMoves = GenerateSuccessors.rook(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(0, 0, 1, 0));
+		expected.add(new Move(0, 0, 2, 0));
+		expected.add(new Move(0, 0, 3, 0));
+		expected.add(new Move(0, 0, 4, 0));
+		expected.add(new Move(0, 0, 5, 0));
+		expected.add(new Move(0, 0, 6, 0));
+		assertEquals(expected, rookMoves);
+	}
+
+	@Test
+	public void testRookMoveBlack01() throws Exception {
+		// Move a rook into a position in the middle of the board
+		b.board[3][3] = Board.blackRook;
+		b.board[0][7] = Board.empty;
+		ArrayList<Move> rookMoves = GenerateSuccessors.rook(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(3, 3, 3, 4));
+		expected.add(new Move(3, 3, 3, 5));
+		expected.add(new Move(3, 3, 3, 6));
+		expected.add(new Move(3, 3, 3, 7));
+		expected.add(new Move(3, 3, 3, 2));
+		expected.add(new Move(3, 3, 3, 1));
+		expected.add(new Move(3, 3, 3, 0));
+		expected.add(new Move(3, 3, 4, 3));
+		expected.add(new Move(3, 3, 5, 3));
+		expected.add(new Move(3, 3, 6, 3));
+		expected.add(new Move(3, 3, 2, 3));
+		assertEquals(expected, rookMoves);
+	}
+
+	@Test
+	public void testRookMoveWhite00() throws Exception {
+		// Remove a single pawn in front of a rook
+		b.board[6][7] = Board.empty;
+		ArrayList<Move> rookMoves = GenerateSuccessors.rook(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(7, 7, 6, 7));
+		expected.add(new Move(7, 7, 5, 7));
+		expected.add(new Move(7, 7, 4, 7));
+		expected.add(new Move(7, 7, 3, 7));
+		expected.add(new Move(7, 7, 2, 7));
+		expected.add(new Move(7, 7, 1, 7));
+		assertEquals(expected, rookMoves);
+	}
+
+	@Test
+	public void testRookMoveWhite01() throws Exception {
+		// Move a rook into a position in the middle of the board
+		b.board[3][3] = Board.whiteRook;
+		b.board[7][0] = Board.empty;
+		ArrayList<Move> rookMoves = GenerateSuccessors.rook(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(3, 3, 3, 4));
+		expected.add(new Move(3, 3, 3, 5));
+		expected.add(new Move(3, 3, 3, 6));
+		expected.add(new Move(3, 3, 3, 7));
+		expected.add(new Move(3, 3, 3, 2));
+		expected.add(new Move(3, 3, 3, 1));
+		expected.add(new Move(3, 3, 3, 0));
+		expected.add(new Move(3, 3, 4, 3));
+		expected.add(new Move(3, 3, 5, 3));
+		expected.add(new Move(3, 3, 2, 3));
+		expected.add(new Move(3, 3, 1, 3));
+		assertEquals(expected, rookMoves);
 	}
 }

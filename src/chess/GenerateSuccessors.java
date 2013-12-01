@@ -74,6 +74,80 @@ public class GenerateSuccessors {
 		return moves;
 	}
 
+	public static ArrayList<Move> rook(Board b, int color) {
+		ArrayList<Move> moves = new ArrayList<Move>();
+		// Set the piece we want to look for to the WhitePawn
+		int piece = Board.whiteRook;
+		// But if the color passed in is -1, we want to look for the black pawn
+		if (color == Board.black) {
+			piece = Board.blackRook;
+		}
+		int opponentColor = Board.black;
+		if (color == Board.black) {
+			opponentColor = Board.white;
+		}
+
+		ArrayList<Position> pieces = findPieces(b, piece);
+
+		for (Position p : pieces) {
+			// Handle all possible vertical (file) moves down the board
+			for (int file = p.file; file < b.board[p.rank].length; file++) {
+				Position currentPosition = new Position(p.rank, file);
+				boolean shouldKeepGoing = handleRookMove(b, moves, p, currentPosition, opponentColor, piece);
+				if (!shouldKeepGoing) {
+					break;
+				}
+			}
+			// Handle all possible vertical (file) moves up the board
+			for (int file = p.file; file >= 0; file--) {
+				Position currentPosition = new Position(p.rank, file);
+				boolean shouldKeepGoing = handleRookMove(b, moves, p, currentPosition, opponentColor, piece);
+				if (!shouldKeepGoing) {
+					break;
+				}
+			}
+
+			// Handle all possible horizontal (rank) moves down the board
+			for (int rank = p.rank; rank < b.board.length; rank++) {
+				Position currentPosition = new Position(rank, p.file);
+				boolean shouldKeepGoing = handleRookMove(b, moves, p, currentPosition, opponentColor, piece);
+				if (!shouldKeepGoing) {
+					break;
+				}
+			}
+			// Handle all possible horizontal (rank) moves up the board
+			for (int rank = p.rank; rank >= 0; rank--) {
+				Position currentPosition = new Position(rank, p.file);
+				boolean shouldKeepGoing = handleRookMove(b, moves, p, currentPosition, opponentColor, piece);
+				if (!shouldKeepGoing) {
+					break;
+				}
+			}
+		}
+
+		return moves;
+	}
+
+	private static boolean handleRookMove(Board b, ArrayList<Move> moves, Position p, Position currentPosition, int opponentColor, int piece) {
+		if (b.currentPieceInPosition(currentPosition) == piece) {
+			return true;
+		}
+		if (b.spaceHasOpponent(currentPosition, opponentColor)) {
+			// There is an opponent here, this will be a possible move
+			moves.add(new Move(p, currentPosition));
+			// But the rook can not jump over this, so stop the loop
+			return false;
+		}
+		if (b.spaceIsEmpty(currentPosition)) {
+			// If the space is just empty, then it's a valid move
+			moves.add(new Move(p, currentPosition));
+			return true;
+		}
+		// Space is taken by one of our pieces, all other
+		// moves after this are invalid, break.
+		return false;
+	}
+
 	/**
 	 * Returns a list of the positions of the pieces given by the int piece param
 	 * @param b the board
