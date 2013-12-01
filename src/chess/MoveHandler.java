@@ -113,12 +113,12 @@ public class MoveHandler {
 	public static String convertMoveToServerNotation(Board b, Move m) {
 		String serverNotation = "";
 		// Get the piece's letter notation and add it to the return string
-		serverNotation += convertIntToServerChar(b.board[m.startRank][m.startFile]);
+		serverNotation += convertIntToServerChar(b.board[m.start.rank][m.start.file]);
 		// Get the file notation for the start row
-		serverNotation += fileIntegerToFile.get(m.startFile);
-		serverNotation += convertRowToServerRow(m.startRank);
-		serverNotation += fileIntegerToFile.get(m.endFile);
-		serverNotation += convertRowToServerRow(m.endRank);
+		serverNotation += fileIntegerToFile.get(m.start.file);
+		serverNotation += convertRowToServerRow(m.start.rank);
+		serverNotation += fileIntegerToFile.get(m.end.file);
+		serverNotation += convertRowToServerRow(m.end.rank);
 		// TODO: Handle promotion
 		return serverNotation;
 	}

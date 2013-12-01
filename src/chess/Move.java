@@ -4,22 +4,47 @@ package chess;
  * A class representing a single move on the board
  */
 public class Move {
-	public int startRank;
-	public int startFile;
-	public int endRank;
-	public int endFile;
+	public Position start;
+	public Position end;
 
 	public Move() {
-		this.startRank = -1;
-		this.startFile = -1;
-		this.endRank = -1;
-		this.endFile = -1;
+		this.start = new Position();
+		this.end = new Position();
 	}
 
 	public Move(int startRank, int startFile, int endRank, int endFile) {
-		this.startRank = startRank;
-		this.startFile = startFile;
-		this.endRank = endRank;
-		this.endFile = endFile;
+		this.start = new Position(startRank, startFile);
+		this.end = new Position(endRank, endFile);
+	}
+
+	public Move(Position start, Position end) {
+		this.start = start;
+		this.end = end;
+	}
+
+	@Override
+	public String toString() {
+		return "Start: (" + this.start.rank + ", " + this.start.file +
+				") End: (" + this.end.rank + ", " + this.end.file + ")";
+	}
+
+	@Override
+	public boolean equals(Object m) {
+		if (m == this) {
+			return true;
+		}
+		if (m == null || m.getClass() != this.getClass()) {
+			return false;
+		}
+
+		Move move = (Move) m;
+
+		if (move.start.file == this.start.file &&
+			move.start.rank == this.start.rank &&
+			move.end.file == this.end.file &&
+			move.end.rank == this.end.rank) {
+			return true;
+		}
+		return false;
 	}
 }

@@ -33,6 +33,12 @@ public class Board {
 	public static final int blackPawn = -1;
 	public static final int empty = 0;
 
+	/**
+	 * Integer values we will use to reference colors
+	 */
+	public static final int white = 1;
+	public static final int black = -1;
+
 	public Board() {
 		this.board = new int[8][8];
 		this.isOurTurn = false;
@@ -89,6 +95,23 @@ public class Board {
 				}
 			}
 		}
+	}
+
+	public boolean spaceIsEmpty(Position p) {
+		return this.board[p.rank][p.file] == Board.empty;
+	}
+
+	public boolean spaceHasOpponent(Position p, int opponentColor) {
+		if (opponentColor == Board.white) {
+			if (this.board[p.rank][p.file] > 0) {
+				return true;
+			}
+		} else {
+			if (this.board[p.rank][p.file] < 0) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
