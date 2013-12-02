@@ -27,6 +27,11 @@ public class GenerateSuccessorsTest {
 	@Test
 	public void testPawnInitialBlack() throws Exception {
 		ArrayList<Move> pawnMoves = GenerateSuccessors.pawn(b, Board.black);
+		ArrayList<Move> expected = expectedPawnInitialBlack();
+		assertEquals(expected, pawnMoves);
+	}
+
+	private ArrayList<Move> expectedPawnInitialBlack() {
 		ArrayList<Move> expected = new ArrayList<Move>();
 		expected.add(new Move(1, 0, 2, 0));
 		expected.add(new Move(1, 0, 3, 0));
@@ -44,12 +49,17 @@ public class GenerateSuccessorsTest {
 		expected.add(new Move(1, 6, 3, 6));
 		expected.add(new Move(1, 7, 2, 7));
 		expected.add(new Move(1, 7, 3, 7));
-		assertEquals(expected, pawnMoves);
+		return expected;
 	}
 
 	@Test
 	public void testPawnInitialWhite() throws Exception {
 		ArrayList<Move> pawnMoves = GenerateSuccessors.pawn(b, Board.white);
+		ArrayList<Move> expected = expectedPawnInitialWhite();
+		assertEquals(expected, pawnMoves);
+	}
+
+	private ArrayList<Move> expectedPawnInitialWhite() {
 		ArrayList<Move> expected = new ArrayList<Move>();
 		expected.add(new Move(6, 0, 4, 0));
 		expected.add(new Move(6, 0, 5, 0));
@@ -67,7 +77,7 @@ public class GenerateSuccessorsTest {
 		expected.add(new Move(6, 6, 5, 6));
 		expected.add(new Move(6, 7, 4, 7));
 		expected.add(new Move(6, 7, 5, 7));
-		assertEquals(expected, pawnMoves);
+		return expected;
 	}
 
 	@Test
@@ -284,23 +294,33 @@ public class GenerateSuccessorsTest {
 	@Test
 	public void testKnightInitialBlack() throws Exception {
 		ArrayList<Move> knightMoves = GenerateSuccessors.knight(b, Board.black);
+		ArrayList<Move> expected = expectedKnightInitialBlack();
+		assertEquals(expected, knightMoves);
+	}
+
+	private ArrayList<Move> expectedKnightInitialBlack() throws Exception {
 		ArrayList<Move> expected = new ArrayList<Move>();
 		expected.add(new Move(0, 1, 2, 0));
 		expected.add(new Move(0, 1, 2, 2));
 		expected.add(new Move(0, 6, 2, 5));
 		expected.add(new Move(0, 6, 2, 7));
-		assertEquals(expected, knightMoves);
+		return expected;
 	}
 
 	@Test
 	public void testKnightInitialWhite() throws Exception {
 		ArrayList<Move> knightMoves = GenerateSuccessors.knight(b, Board.white);
+		ArrayList<Move> expected = expectedKnightInitialWhite();
+		assertEquals(expected, knightMoves);
+	}
+
+	private ArrayList<Move> expectedKnightInitialWhite() {
 		ArrayList<Move> expected = new ArrayList<Move>();
 		expected.add(new Move(7, 1, 5, 0));
 		expected.add(new Move(7, 1, 5, 2));
 		expected.add(new Move(7, 6, 5, 5));
 		expected.add(new Move(7, 6, 5, 7));
-		assertEquals(expected, knightMoves);
+		return expected;
 	}
 
 	@Test
@@ -446,5 +466,25 @@ public class GenerateSuccessorsTest {
 		expected.add(new Move(2, 0, 3, 1));
 		expected.add(new Move(2, 0, 3, 0));
 		assertEquals(expected, kingMoves);
+	}
+
+	@Test
+	public void testAllPossibleSuccessorsInitialBlack() throws Exception {
+		ArrayList<Move> allMoves = GenerateSuccessors.allPossibleSuccessors(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		// Only pawns and knights can make an initial move
+		expected.addAll(expectedPawnInitialBlack());
+		expected.addAll(expectedKnightInitialBlack());
+		assertEquals(expected, allMoves);
+	}
+
+	@Test
+	public void testAllPossibleSuccessorsInitialWhite() throws Exception {
+		ArrayList<Move> allMoves = GenerateSuccessors.allPossibleSuccessors(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		// Only pawns and knights can make an initial move
+		expected.addAll(expectedPawnInitialWhite());
+		expected.addAll(expectedKnightInitialWhite());
+		assertEquals(expected, allMoves);
 	}
 }

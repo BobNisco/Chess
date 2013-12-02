@@ -436,6 +436,16 @@ public class GenerateSuccessors {
 		return moves;
 	}
 
+	public static ArrayList<Move> allPossibleSuccessors(Board b, int color) {
+		ArrayList<Move> moves = new ArrayList<Move>();
+		moves.addAll(pawn(b, color));
+		moves.addAll(rook(b, color));
+		moves.addAll(bishop(b, color));
+		moves.addAll(knight(b, color));
+		moves.addAll(queen(b, color));
+		moves.addAll(king(b, color));
+		return moves;
+	}
 	/**
 	 * Returns a list of the positions of the pieces given by the int piece param
 	 * @param b the board
