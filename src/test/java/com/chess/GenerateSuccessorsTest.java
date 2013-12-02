@@ -223,4 +223,61 @@ public class GenerateSuccessorsTest {
 		ArrayList<Move> expected = new ArrayList<Move>();
 		assertEquals(expected, rookMoves);
 	}
+
+	@Test
+	public void testBishopMoveBlack00() throws Exception {
+		// Remove a single pawn in the path of a bishop from an initial point
+		b.board[1][4] = Board.empty;
+		ArrayList<Move> bishopMoves = GenerateSuccessors.bishop(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(0, 5, 1, 4));
+		expected.add(new Move(0, 5, 2, 3));
+		expected.add(new Move(0, 5, 3, 2));
+		expected.add(new Move(0, 5, 4, 1));
+		expected.add(new Move(0, 5, 5, 0));
+		assertEquals(expected, bishopMoves);
+	}
+
+	@Test
+	public void testBishopMoveWhite00() throws Exception {
+		// Remove a single pawn in the path of a bishop from an initial point
+		b.board[6][1] = Board.empty;
+		ArrayList<Move> bishopMoves = GenerateSuccessors.bishop(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(7, 2, 6, 1));
+		expected.add(new Move(7, 2, 5, 0));
+		assertEquals(expected, bishopMoves);
+	}
+
+	@Test
+	public void testBishopMoveBlack01() throws Exception {
+		// Put a bishop somewhere in the middle of the board
+		b.board[3][5] = Board.blackBishop;
+		b.board[0][5] = Board.empty;
+		ArrayList<Move> bishopMoves = GenerateSuccessors.bishop(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(3, 5, 2, 4));
+		expected.add(new Move(3, 5, 2, 6));
+		expected.add(new Move(3, 5, 4, 4));
+		expected.add(new Move(3, 5, 5, 3));
+		expected.add(new Move(3, 5, 6, 2));
+		expected.add(new Move(3, 5, 4, 6));
+		expected.add(new Move(3, 5, 5, 7));
+		assertEquals(expected, bishopMoves);
+	}
+
+	@Test
+	public void testBishopMoveWhite01() throws Exception {
+		// Put a bishop somewhere in the middle of the board
+		b.board[5][1] = Board.whiteBishop;
+		b.board[7][5] = Board.empty;
+		ArrayList<Move> bishopMoves = GenerateSuccessors.bishop(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(5, 1, 4, 0));
+		expected.add(new Move(5, 1, 4, 2));
+		expected.add(new Move(5, 1, 3, 3));
+		expected.add(new Move(5, 1, 2, 4));
+		expected.add(new Move(5, 1, 1, 5));
+		assertEquals(expected, bishopMoves);
+	}
 }

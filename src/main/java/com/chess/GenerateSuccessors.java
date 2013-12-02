@@ -129,6 +129,7 @@ public class GenerateSuccessors {
 	}
 
 	private static boolean handleRookMove(Board b, ArrayList<Move> moves, Position p, Position currentPosition, int opponentColor, int piece) {
+		// TODO: Fix this, don't want to mix pieces
 		if (b.currentPieceInPosition(currentPosition) == piece) {
 			return true;
 		}
@@ -161,14 +162,69 @@ public class GenerateSuccessors {
 		}
 
 		for (Position p : pieces) {
-			System.out.println(p);
 			// Handle any up/left moves
+			int curRank = p.rank - 1;
+			int curFile = p.file - 1;
+			while (curRank >= 0 && curFile >= 0) {
+				Position possiblePosition = new Position(curRank, curFile);
+				boolean shouldKeepGoing = handleBishopMove(b, moves, p, possiblePosition, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+				// Move diagonally up and to the left
+				curRank--;
+				curFile--;
+			}
 			// Handle any up/right moves
+			curRank = p.rank - 1;
+			curFile = p.file + 1;
+			while (curRank >= 0 && curFile < b.board.length) {
+				Position possiblePosition = new Position(curRank, curFile);
+				boolean shouldKeepGoing = handleBishopMove(b, moves, p, possiblePosition, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+				curRank--;
+				curFile++;
+			}
 			// Handle any down/left moves
+			curRank = p.rank + 1;
+			curFile = p.file - 1;
+			while (curRank < b.board.length && curFile >= 0) {
+				Position possiblePosition = new Position(curRank, curFile);
+				boolean shouldKeepGoing = handleBishopMove(b, moves, p, possiblePosition, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+				curRank++;
+				curFile--;
+			}
 			// Handle any down/right moves
+			curRank = p.rank + 1;
+			curFile = p.file + 1;
+			while (curRank < b.board.length && curFile < b.board.length) {
+				Position possiblePosition = new Position(curRank, curFile);
+				boolean shouldKeepGoing = handleBishopMove(b, moves, p, possiblePosition, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+				curRank++;
+				curFile++;
+			}
 		}
 
 		return moves;
+	}
+
+	private static boolean handleBishopMove(Board b, ArrayList<Move> moves, Position p, Position currentPosition, int opponentColor) {
+		if (b.spaceHasOpponent(currentPosition, opponentColor)) {
+			moves.add(new Move(p, currentPosition));
+			return false;
+		} else if (b.spaceIsEmpty(currentPosition)) {
+			moves.add(new Move(p, currentPosition));
+			return true;
+		}
+		return false;
 	}
 
 	/**
