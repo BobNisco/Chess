@@ -40,13 +40,29 @@ public class GenerateSuccessors {
 		for (Position p : pieces) {
 			if (p.rank == beginningRank) {
 				// Handle starting position
-				// Pawns in the starting position can either move
-				// one or two spaces towards the opposing team
-				for (int i = startingRank; i < endingRank; i++) {
-					// Generate the move by moving forward to the ith space
-					Position possiblePosition = new Position(i, p.file);
-					if (b.spaceIsEmpty(possiblePosition)) {
-						moves.add(new Move(p, possiblePosition));
+				if (color == Board.black) {
+					// Black Pawns in the starting position can either move
+					// one or two spaces towards white as long as there are
+					// no pieces in between in the way
+					for (int i = 2; i < 4; i++) {
+						Position possiblePosition = new Position(i, p.file);
+						if (b.spaceIsEmpty(possiblePosition)) {
+							moves.add(new Move(p, possiblePosition));
+						} else {
+							break;
+						}
+					}
+				} else if (color == Board.white) {
+					// White Pawns in the starting position can either move
+					// one or two spaces towards black as long as there are
+					// no pieces in between in the way
+					for (int i = 5; i > 3; i--) {
+						Position possiblePosition = new Position(i, p.file);
+						if (b.spaceIsEmpty(possiblePosition)) {
+							moves.add(new Move(p, possiblePosition));
+						} else {
+							break;
+						}
 					}
 				}
 			} else {

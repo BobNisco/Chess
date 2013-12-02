@@ -61,22 +61,22 @@ public class GenerateSuccessorsTest {
 
 	private ArrayList<Move> expectedPawnInitialWhite() {
 		ArrayList<Move> expected = new ArrayList<Move>();
-		expected.add(new Move(6, 0, 4, 0));
 		expected.add(new Move(6, 0, 5, 0));
-		expected.add(new Move(6, 1, 4, 1));
+		expected.add(new Move(6, 0, 4, 0));
 		expected.add(new Move(6, 1, 5, 1));
-		expected.add(new Move(6, 2, 4, 2));
+		expected.add(new Move(6, 1, 4, 1));
 		expected.add(new Move(6, 2, 5, 2));
-		expected.add(new Move(6, 3, 4, 3));
+		expected.add(new Move(6, 2, 4, 2));
 		expected.add(new Move(6, 3, 5, 3));
-		expected.add(new Move(6, 4, 4, 4));
+		expected.add(new Move(6, 3, 4, 3));
 		expected.add(new Move(6, 4, 5, 4));
-		expected.add(new Move(6, 5, 4, 5));
+		expected.add(new Move(6, 4, 4, 4));
 		expected.add(new Move(6, 5, 5, 5));
-		expected.add(new Move(6, 6, 4, 6));
+		expected.add(new Move(6, 5, 4, 5));
 		expected.add(new Move(6, 6, 5, 6));
-		expected.add(new Move(6, 7, 4, 7));
+		expected.add(new Move(6, 6, 4, 6));
 		expected.add(new Move(6, 7, 5, 7));
+		expected.add(new Move(6, 7, 4, 7));
 		return expected;
 	}
 
@@ -103,7 +103,6 @@ public class GenerateSuccessorsTest {
 		expected.add(new Move(1, 6, 2, 6));
 		expected.add(new Move(1, 6, 3, 6));
 		expected.add(new Move(1, 6, 2, 7)); // Takeover
-		expected.add(new Move(1, 7, 3, 7));
 		assertEquals(expected, pawnMoves);
 	}
 
@@ -115,22 +114,21 @@ public class GenerateSuccessorsTest {
 		b.board[1][0] = Board.empty;
 		ArrayList<Move> pawnMoves = GenerateSuccessors.pawn(b, Board.white);
 		ArrayList<Move> expected = new ArrayList<Move>();
-		expected.add(new Move(6, 0, 4, 0));
-		expected.add(new Move(6, 1, 4, 1));
 		expected.add(new Move(6, 1, 5, 1));
+		expected.add(new Move(6, 1, 4, 1));
 		expected.add(new Move(6, 1, 5, 0)); // Takeover
-		expected.add(new Move(6, 2, 4, 2));
 		expected.add(new Move(6, 2, 5, 2));
-		expected.add(new Move(6, 3, 4, 3));
+		expected.add(new Move(6, 2, 4, 2));
 		expected.add(new Move(6, 3, 5, 3));
-		expected.add(new Move(6, 4, 4, 4));
+		expected.add(new Move(6, 3, 4, 3));
 		expected.add(new Move(6, 4, 5, 4));
-		expected.add(new Move(6, 5, 4, 5));
+		expected.add(new Move(6, 4, 4, 4));
 		expected.add(new Move(6, 5, 5, 5));
-		expected.add(new Move(6, 6, 4, 6));
+		expected.add(new Move(6, 5, 4, 5));
 		expected.add(new Move(6, 6, 5, 6));
-		expected.add(new Move(6, 7, 4, 7));
+		expected.add(new Move(6, 6, 4, 6));
 		expected.add(new Move(6, 7, 5, 7));
+		expected.add(new Move(6, 7, 4, 7));
 		assertEquals(expected, pawnMoves);
 	}
 
