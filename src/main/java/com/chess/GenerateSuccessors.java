@@ -227,6 +227,72 @@ public class GenerateSuccessors {
 		return false;
 	}
 
+	public static ArrayList<Move> knight(Board b, int color) {
+		ArrayList<Move> moves = new ArrayList<Move>();
+		int piece = (color == Board.white) ? Board.whiteKnight : Board.blackKnight;
+		ArrayList<Position> pieces = findPieces(b, piece);
+		int opponentColor = (color == Board.white) ? Board.black : Board.white;
+
+		for (Position p : pieces) {
+			// Move up 2, left 1
+			Move possibleMove = new Move(p, new Position(p.rank + 2, p.file - 1));
+			if (isValidKnightMove(b, possibleMove, opponentColor)) {
+				moves.add(possibleMove);
+			}
+			// Move up 2, right 1
+			possibleMove = new Move(p, new Position(p.rank + 2, p.file + 1));
+			if (isValidKnightMove(b, possibleMove, opponentColor)) {
+				moves.add(possibleMove);
+			}
+			// Move up 1, left 2
+			possibleMove = new Move(p, new Position(p.rank + 1, p.file - 2));
+			if (isValidKnightMove(b, possibleMove, opponentColor)) {
+				moves.add(possibleMove);
+			}
+			// Move up 1, right 2
+			possibleMove = new Move(p, new Position(p.rank + 1, p.file + 2));
+			if (isValidKnightMove(b, possibleMove, opponentColor)) {
+				moves.add(possibleMove);
+			}
+			// Move down 2, left 1
+			possibleMove = new Move(p, new Position(p.rank - 2, p.file - 1));
+			if (isValidKnightMove(b, possibleMove, opponentColor)) {
+				moves.add(possibleMove);
+			}
+			// Move down 2, right 1
+			possibleMove = new Move(p, new Position(p.rank - 2, p.file + 1));
+			if (isValidKnightMove(b, possibleMove, opponentColor)) {
+				moves.add(possibleMove);
+			}
+			// Move down 1, left 2
+			possibleMove = new Move(p, new Position(p.rank - 1, p.file - 2));
+			if (isValidKnightMove(b, possibleMove, opponentColor)) {
+				moves.add(possibleMove);
+			}
+			// Move down 1, right 2
+			possibleMove = new Move(p, new Position(p.rank - 1, p.file + 2));
+			if (isValidKnightMove(b, possibleMove, opponentColor)) {
+				moves.add(possibleMove);
+			}
+		}
+
+		return moves;
+	}
+
+	private static boolean isValidKnightMove(Board b, Move m, int opponentColor) {
+		try {
+			if (b.spaceIsEmpty(m.end) || b.spaceHasOpponent(m.end, opponentColor)) {
+				return true;
+			}
+			return false;
+		} catch (IndexOutOfBoundsException e) {
+			// Since we're not checking bounds before passing the possible move
+			// into this function, we'll just catch it here and return it as
+			// not a valid move.
+			return false;
+		}
+	}
+
 	/**
 	 * Returns a list of the positions of the pieces given by the int piece param
 	 * @param b the board

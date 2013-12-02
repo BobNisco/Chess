@@ -280,4 +280,56 @@ public class GenerateSuccessorsTest {
 		expected.add(new Move(5, 1, 1, 5));
 		assertEquals(expected, bishopMoves);
 	}
+
+	@Test
+	public void testKnightInitialBlack() throws Exception {
+		ArrayList<Move> knightMoves = GenerateSuccessors.knight(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(0, 1, 2, 0));
+		expected.add(new Move(0, 1, 2, 2));
+		expected.add(new Move(0, 6, 2, 5));
+		expected.add(new Move(0, 6, 2, 7));
+		assertEquals(expected, knightMoves);
+	}
+
+	@Test
+	public void testKnightInitialWhite() throws Exception {
+		ArrayList<Move> knightMoves = GenerateSuccessors.knight(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(7, 1, 5, 0));
+		expected.add(new Move(7, 1, 5, 2));
+		expected.add(new Move(7, 6, 5, 5));
+		expected.add(new Move(7, 6, 5, 7));
+		assertEquals(expected, knightMoves);
+	}
+
+	@Test
+	public void testKnightMoveBlack00() throws Exception {
+		b.board[2][0] = Board.blackKnight;
+		b.board[0][1] = Board.empty;
+		ArrayList<Move> knightMoves = GenerateSuccessors.knight(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(0, 6, 2, 5));
+		expected.add(new Move(0, 6, 2, 7));
+		expected.add(new Move(2, 0, 4, 1));
+		expected.add(new Move(2, 0, 3, 2));
+		expected.add(new Move(2, 0, 0, 1));
+		assertEquals(expected, knightMoves);
+	}
+
+	@Test
+	public void testKnightMoveWhite00() throws Exception {
+		b.board[5][5] = Board.whiteKnight;
+		b.board[7][6] = Board.empty;
+		ArrayList<Move> knightMoves = GenerateSuccessors.knight(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(5, 5, 7, 6));
+		expected.add(new Move(5, 5, 3, 4));
+		expected.add(new Move(5, 5, 3, 6));
+		expected.add(new Move(5, 5, 4, 3));
+		expected.add(new Move(5, 5, 4, 7));
+		expected.add(new Move(7, 1, 5, 0));
+		expected.add(new Move(7, 1, 5, 2));
+		assertEquals(expected, knightMoves);
+	}
 }
