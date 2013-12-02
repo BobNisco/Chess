@@ -303,7 +303,7 @@ public class GenerateSuccessors {
 			// Move left
 			for (int file = p.file - 1; file >= 0; file--) {
 				Move possibleMove = new Move(p, new Position(p.rank, file));
-				boolean shouldKeepGoing = handleQueenMove(b, moves, possibleMove, opponentColor);
+				boolean shouldKeepGoing = handlePossibleMove(b, moves, possibleMove, opponentColor);
 				if (!shouldKeepGoing) {
 					break;
 				}
@@ -311,7 +311,7 @@ public class GenerateSuccessors {
 			// Move right
 			for (int file = p.file + 1; file < b.board.length; file++) {
 				Move possibleMove = new Move(p, new Position(p.rank, file));
-				boolean shouldKeepGoing = handleQueenMove(b, moves, possibleMove, opponentColor);
+				boolean shouldKeepGoing = handlePossibleMove(b, moves, possibleMove, opponentColor);
 				if (!shouldKeepGoing) {
 					break;
 				}
@@ -319,7 +319,7 @@ public class GenerateSuccessors {
 			// Move up
 			for (int rank = p.rank - 1; rank >= 0; rank--) {
 				Move possibleMove = new Move(p, new Position(rank, p.file));
-				boolean shouldKeepGoing = handleQueenMove(b, moves, possibleMove, opponentColor);
+				boolean shouldKeepGoing = handlePossibleMove(b, moves, possibleMove, opponentColor);
 				if (!shouldKeepGoing) {
 					break;
 				}
@@ -327,7 +327,7 @@ public class GenerateSuccessors {
 			// Move down
 			for (int rank = p.rank + 1; rank < b.board.length; rank++) {
 				Move possibleMove = new Move(p, new Position(rank, p.file));
-				boolean shouldKeepGoing = handleQueenMove(b, moves, possibleMove, opponentColor);
+				boolean shouldKeepGoing = handlePossibleMove(b, moves, possibleMove, opponentColor);
 				if (!shouldKeepGoing) {
 					break;
 				}
@@ -385,15 +385,55 @@ public class GenerateSuccessors {
 		return moves;
 	}
 
-	private static boolean handleQueenMove(Board b, ArrayList<Move> moves, Move m, int opponentColor) {
-		if (b.spaceHasOpponent(m.end, opponentColor)) {
-			moves.add(m);
+	private static boolean handlePossibleMove(Board b, ArrayList<Move> moves, Move m, int opponentColor) {
+		try {
+			if (b.spaceHasOpponent(m.end, opponentColor)) {
+				moves.add(m);
+				return false;
+			} else if (b.spaceIsEmpty(m.end)) {
+				moves.add(m);
+				return true;
+			}
 			return false;
-		} else if (b.spaceIsEmpty(m.end)) {
-			moves.add(m);
-			return true;
+		} catch (IndexOutOfBoundsException e) {
+			return false;
 		}
-		return false;
+	}
+
+	public static ArrayList<Move> king(Board b, int color) {
+		ArrayList<Move> moves = new ArrayList<Move>();
+		int piece = (color == Board.white) ? Board.whiteKing : Board.blackKing;
+		ArrayList<Position> pieces = findPieces(b, piece);
+		int opponentColor = (color == Board.white) ? Board.black : Board.white;
+
+		for (Position p : pieces) {
+			// Move up
+			Move possibleMove = new Move(p, new Position(p.rank - 1, p.file));
+			handlePossibleMove(b, moves, possibleMove, opponentColor);
+			// Move up/right
+			possibleMove = new Move(p, new Position(p.rank - 1, p.file + 1));
+			handlePossibleMove(b, moves, possibleMove, opponentColor);
+			// Move right
+			possibleMove = new Move(p, new Position(p.rank, p.file + 1));
+			handlePossibleMove(b, moves, possibleMove, opponentColor);
+			// Move down/right
+			possibleMove = new Move(p, new Position(p.rank + 1, p.file + 1));
+			handlePossibleMove(b, moves, possibleMove, opponentColor);
+			// Move down
+			possibleMove = new Move(p, new Position(p.rank + 1, p.file));
+			handlePossibleMove(b, moves, possibleMove, opponentColor);
+			// Move down/left
+			possibleMove = new Move(p, new Position(p.rank + 1, p.file - 1));
+			handlePossibleMove(b, moves, possibleMove, opponentColor);
+			// Move left
+			possibleMove = new Move(p, new Position(p.rank, p.file - 1));
+			handlePossibleMove(b, moves, possibleMove, opponentColor);
+			// Move up/left
+			possibleMove = new Move(p, new Position(p.rank - 1, p.file - 1));
+			handlePossibleMove(b, moves, possibleMove, opponentColor);
+		}
+
+		return moves;
 	}
 
 	/**
