@@ -1,8 +1,8 @@
-package test;
+package test.java.com.chess;
 
-import chess.Board;
-import chess.GenerateSuccessors;
-import chess.Move;
+import main.java.com.chess.Board;
+import main.java.com.chess.GenerateSuccessors;
+import main.java.com.chess.Move;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -207,6 +207,20 @@ public class GenerateSuccessorsTest {
 		expected.add(new Move(3, 3, 5, 3));
 		expected.add(new Move(3, 3, 2, 3));
 		expected.add(new Move(3, 3, 1, 3));
+		assertEquals(expected, rookMoves);
+	}
+
+	@Test
+	public void testBishopInitialBlack() throws Exception {
+		ArrayList<Move> rookMoves = GenerateSuccessors.bishop(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		assertEquals(expected, rookMoves);
+	}
+
+	@Test
+	public void testBishopInitialWhite() throws Exception {
+		ArrayList<Move> rookMoves = GenerateSuccessors.bishop(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
 		assertEquals(expected, rookMoves);
 	}
 }

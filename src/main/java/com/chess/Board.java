@@ -1,6 +1,4 @@
-package chess;
-
-import java.util.HashMap;
+package main.java.com.chess;
 
 /**
  * A class to represent the Chess board (8 files by 8 ranks).

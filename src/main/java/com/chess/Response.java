@@ -1,4 +1,4 @@
-package chess;
+package main.java.com.chess;
 
 /**
  * A class representing the JSON response from the game server

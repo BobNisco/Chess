@@ -1,6 +1,9 @@
-package test;
+package test.java.com.chess;
 
-import chess.*;
+import main.java.com.chess.Board;
+import main.java.com.chess.Move;
+import main.java.com.chess.MoveHandler;
+import main.java.com.chess.Response;
 import org.junit.*;
 import static org.junit.Assert.* ;
 

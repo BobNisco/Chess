@@ -1,4 +1,4 @@
-package chess;
+package main.java.com.chess;
 
 import java.util.ArrayList;
 
@@ -146,6 +146,29 @@ public class GenerateSuccessors {
 		// Space is taken by one of our pieces, all other
 		// moves after this are invalid, break.
 		return false;
+	}
+
+	public static ArrayList<Move> bishop(Board b, int color) {
+		ArrayList<Move> moves = new ArrayList<Move>();
+		int piece = Board.whiteBishop;
+		if (color == Board.black) {
+			piece = Board.blackBishop;
+		}
+		ArrayList<Position> pieces = findPieces(b, piece);
+		int opponentColor = Board.black;
+		if (color == Board.black) {
+			opponentColor = Board.white;
+		}
+
+		for (Position p : pieces) {
+			System.out.println(p);
+			// Handle any up/left moves
+			// Handle any up/right moves
+			// Handle any down/left moves
+			// Handle any down/right moves
+		}
+
+		return moves;
 	}
 
 	/**

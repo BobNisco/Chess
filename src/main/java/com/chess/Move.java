@@ -1,4 +1,4 @@
-package chess;
+package main.java.com.chess;
 
 /**
  * A class representing a single move on the board

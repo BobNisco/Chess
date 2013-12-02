@@ -1,4 +1,4 @@
-package chess;
+package main.java.com.chess;
 
 public class Position {
 	public int rank;
