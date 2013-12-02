@@ -293,6 +293,109 @@ public class GenerateSuccessors {
 		}
 	}
 
+	public static ArrayList<Move> queen(Board b, int color) {
+		ArrayList<Move> moves = new ArrayList<Move>();
+		int piece = (color == Board.white) ? Board.whiteQueen : Board.blackQueen;
+		ArrayList<Position> pieces = findPieces(b, piece);
+		int opponentColor = (color == Board.white) ? Board.black : Board.white;
+
+		for (Position p : pieces) {
+			// Move left
+			for (int file = p.file - 1; file >= 0; file--) {
+				Move possibleMove = new Move(p, new Position(p.rank, file));
+				boolean shouldKeepGoing = handleQueenMove(b, moves, possibleMove, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+			}
+			// Move right
+			for (int file = p.file + 1; file < b.board.length; file++) {
+				Move possibleMove = new Move(p, new Position(p.rank, file));
+				boolean shouldKeepGoing = handleQueenMove(b, moves, possibleMove, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+			}
+			// Move up
+			for (int rank = p.rank - 1; rank >= 0; rank--) {
+				Move possibleMove = new Move(p, new Position(rank, p.file));
+				boolean shouldKeepGoing = handleQueenMove(b, moves, possibleMove, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+			}
+			// Move down
+			for (int rank = p.rank + 1; rank < b.board.length; rank++) {
+				Move possibleMove = new Move(p, new Position(rank, p.file));
+				boolean shouldKeepGoing = handleQueenMove(b, moves, possibleMove, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+			}
+			// Handle any up/left moves
+			int curRank = p.rank - 1;
+			int curFile = p.file - 1;
+			while (curRank >= 0 && curFile >= 0) {
+				Position possiblePosition = new Position(curRank, curFile);
+				boolean shouldKeepGoing = handleBishopMove(b, moves, p, possiblePosition, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+				// Move diagonally up and to the left
+				curRank--;
+				curFile--;
+			}
+			// Handle any up/right moves
+			curRank = p.rank - 1;
+			curFile = p.file + 1;
+			while (curRank >= 0 && curFile < b.board.length) {
+				Position possiblePosition = new Position(curRank, curFile);
+				boolean shouldKeepGoing = handleBishopMove(b, moves, p, possiblePosition, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+				curRank--;
+				curFile++;
+			}
+			// Handle any down/left moves
+			curRank = p.rank + 1;
+			curFile = p.file - 1;
+			while (curRank < b.board.length && curFile >= 0) {
+				Position possiblePosition = new Position(curRank, curFile);
+				boolean shouldKeepGoing = handleBishopMove(b, moves, p, possiblePosition, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+				curRank++;
+				curFile--;
+			}
+			// Handle any down/right moves
+			curRank = p.rank + 1;
+			curFile = p.file + 1;
+			while (curRank < b.board.length && curFile < b.board.length) {
+				Position possiblePosition = new Position(curRank, curFile);
+				boolean shouldKeepGoing = handleBishopMove(b, moves, p, possiblePosition, opponentColor);
+				if (!shouldKeepGoing) {
+					break;
+				}
+				curRank++;
+				curFile++;
+			}
+		}
+		return moves;
+	}
+
+	private static boolean handleQueenMove(Board b, ArrayList<Move> moves, Move m, int opponentColor) {
+		if (b.spaceHasOpponent(m.end, opponentColor)) {
+			moves.add(m);
+			return false;
+		} else if (b.spaceIsEmpty(m.end)) {
+			moves.add(m);
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Returns a list of the positions of the pieces given by the int piece param
 	 * @param b the board

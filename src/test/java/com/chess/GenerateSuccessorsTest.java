@@ -332,4 +332,74 @@ public class GenerateSuccessorsTest {
 		expected.add(new Move(7, 1, 5, 2));
 		assertEquals(expected, knightMoves);
 	}
+
+	@Test
+	public void testQueenInitialBlack() throws Exception {
+		ArrayList<Move> queenMoves = GenerateSuccessors.queen(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		assertEquals(expected, queenMoves);
+	}
+
+	@Test
+	public void testQueenInitialWhite() throws Exception {
+		ArrayList<Move> queenMoves = GenerateSuccessors.queen(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		assertEquals(expected, queenMoves);
+	}
+
+	@Test
+	public void testQueenMoveBlack00() throws Exception {
+		b.board[4][3] = Board.blackQueen;
+		b.board[0][3] = Board.empty;
+		ArrayList<Move> queenMoves = GenerateSuccessors.queen(b, Board.black);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(4, 3, 4, 2));
+		expected.add(new Move(4, 3, 4, 1));
+		expected.add(new Move(4, 3, 4, 0));
+		expected.add(new Move(4, 3, 4, 4));
+		expected.add(new Move(4, 3, 4, 5));
+		expected.add(new Move(4, 3, 4, 6));
+		expected.add(new Move(4, 3, 4, 7));
+		expected.add(new Move(4, 3, 3, 3));
+		expected.add(new Move(4, 3, 2, 3));
+		expected.add(new Move(4, 3, 5, 3));
+		expected.add(new Move(4, 3, 6, 3));
+		expected.add(new Move(4, 3, 3, 2));
+		expected.add(new Move(4, 3, 2, 1));
+		expected.add(new Move(4, 3, 3, 4));
+		expected.add(new Move(4, 3, 2, 5));
+		expected.add(new Move(4, 3, 5, 2));
+		expected.add(new Move(4, 3, 6, 1));
+		expected.add(new Move(4, 3, 5, 4));
+		expected.add(new Move(4, 3, 6, 5));
+		assertEquals(expected, queenMoves);
+	}
+
+	@Test
+	public void testQueenMoveWhite00() throws Exception {
+		b.board[4][4] = Board.whiteQueen;
+		b.board[7][4] = Board.empty;
+		ArrayList<Move> queenMoves = GenerateSuccessors.queen(b, Board.white);
+		ArrayList<Move> expected = new ArrayList<Move>();
+		expected.add(new Move(4, 4, 4, 3));
+		expected.add(new Move(4, 4, 4, 2));
+		expected.add(new Move(4, 4, 4, 1));
+		expected.add(new Move(4, 4, 4, 0));
+		expected.add(new Move(4, 4, 4, 5));
+		expected.add(new Move(4, 4, 4, 6));
+		expected.add(new Move(4, 4, 4, 7));
+		expected.add(new Move(4, 4, 3, 4));
+		expected.add(new Move(4, 4, 2, 4));
+		expected.add(new Move(4, 4, 1, 4));
+		expected.add(new Move(4, 4, 5, 4));
+		expected.add(new Move(4, 4, 3, 3));
+		expected.add(new Move(4, 4, 2, 2));
+		expected.add(new Move(4, 4, 1, 1));
+		expected.add(new Move(4, 4, 3, 5));
+		expected.add(new Move(4, 4, 2, 6));
+		expected.add(new Move(4, 4, 1, 7));
+		expected.add(new Move(4, 4, 5, 3));
+		expected.add(new Move(4, 4, 5, 5));
+		assertEquals(expected, queenMoves);
+	}
 }
