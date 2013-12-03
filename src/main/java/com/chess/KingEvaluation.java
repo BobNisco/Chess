@@ -14,7 +14,7 @@ public class KingEvaluation extends PieceEvaluation {
         this.setKingEvaluation();
     }
 
-    public void setKingEvaluation() {
+    private void setKingEvaluation() {
         this.b.board[0][0] = -30;
         this.b.board[0][1] = -40;
         this.b.board[0][2] = -40;
@@ -90,6 +90,6 @@ public class KingEvaluation extends PieceEvaluation {
 
 
 
-
+    }
 
 }
