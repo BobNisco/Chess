@@ -24,15 +24,11 @@ public class GenerateSuccessors {
 		// Some variables we will use for moving the piece in the loop
 		// This is defaulted to the case of white
 		int beginningRank = 6;
-		int startingRank = 4;
-		int endingRank = 6;
 		int forwardMove = -1;
 		int opponentColor = Board.black;
 		if (color == Board.black) {
 			// Handle the case of black
 			beginningRank = 1;
-			startingRank = 2;
-			endingRank = 4;
 			forwardMove = 1;
 			opponentColor = Board.white;
 		}
