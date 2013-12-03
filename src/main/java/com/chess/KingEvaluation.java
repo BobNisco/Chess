@@ -14,6 +14,14 @@ public class KingEvaluation extends PieceEvaluation {
         this.setKingEvaluation();
     }
 
+	public KingEvaluation(Board b, int color) {
+		super(b);
+		this.setKingEvaluation();
+		if (color == Board.black) {
+			this.mirrorForBlack();
+		}
+	}
+
     private void setKingEvaluation() {
         this.b.board[0][0] = -30;
         this.b.board[0][1] = -40;

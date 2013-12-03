@@ -7,6 +7,14 @@ public class PawnEvaluation extends PieceEvaluation {
 		this.setPawnEvaluation();
 	}
 
+	public PawnEvaluation(Board b, int color) {
+		super(b);
+		this.setPawnEvaluation();
+		if (color == Board.black) {
+			this.mirrorForBlack();
+		}
+	}
+
 	public void setPawnEvaluation() {
 		this.b.board[0][0] = 70;
 		this.b.board[0][1] = 70;

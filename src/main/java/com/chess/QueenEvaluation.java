@@ -14,6 +14,14 @@ public class QueenEvaluation extends PieceEvaluation {
         this.setQueenEvaluation();
     }
 
+	public QueenEvaluation(Board b, int color) {
+		super(b);
+		this.setQueenEvaluation();
+		if (color == Board.black) {
+			this.mirrorForBlack();
+		}
+	}
+
     private void setQueenEvaluation() {
         this.b.board[0][0] = -20;
         this.b.board[0][1] = -10;

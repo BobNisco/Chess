@@ -6,6 +6,14 @@ public class RookEvaluation extends PieceEvaluation {
 		this.setRookEvaluation();
 	}
 
+	public RookEvaluation(Board b, int color) {
+		super(b);
+		this.setRookEvaluation();
+		if (color == Board.black) {
+			this.mirrorForBlack();
+		}
+	}
+
 	private void setRookEvaluation() {
 		this.b.board[0][0] = 0;
 		this.b.board[0][1] = 0;

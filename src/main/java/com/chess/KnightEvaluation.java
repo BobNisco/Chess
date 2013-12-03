@@ -7,6 +7,14 @@ public class KnightEvaluation extends PieceEvaluation {
 		this.setKnightEvaluation();
 	}
 
+	public KnightEvaluation(Board b, int color) {
+		super(b);
+		this.setKnightEvaluation();
+		if (color == Board.black) {
+			this.mirrorForBlack();
+		}
+	}
+
 	private void setKnightEvaluation() {
 		this.b.board[0][0] = -50;
 		this.b.board[0][1] = -40;
