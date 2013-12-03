@@ -1,17 +1,11 @@
 package test.java.com.chess;
 
-import main.java.com.chess.Board;
-import main.java.com.chess.GenerateSuccessors;
-import main.java.com.chess.Move;
 import main.java.com.chess.PawnEvaluation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
 public class PieceEvaluationTest {
 	private PawnEvaluation p;
