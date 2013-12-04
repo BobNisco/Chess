@@ -44,6 +44,11 @@ public class Board {
 		this.setStartGameState();
 	}
 
+	public Board(Board b) {
+		this.board = b.board;
+		this.isOurTurn = false;
+	}
+
 	/**
 	 * Sets the state of the board to the initial Chess game state
 	 */
@@ -114,6 +119,18 @@ public class Board {
 
 	public int currentPieceInPosition(Position p) {
 		return this.board[p.rank][p.file];
+	}
+
+	public void handleMove(Move m) {
+		int[][] oldBoard = new int[8][8];
+		for (int rank = 0; rank < board.length; rank++) {
+			for (int file = 0; file < board[rank].length; file++) {
+				oldBoard[rank][file] = board[rank][file];
+			}
+		}
+
+		this.board[m.end.rank][m.end.file] = oldBoard[m.start.rank][m.start.file];
+		this.board[m.start.rank][m.start.file] = Board.empty;
 	}
 
 	/**
