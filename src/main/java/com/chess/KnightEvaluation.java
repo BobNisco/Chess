@@ -2,13 +2,8 @@ package main.java.com.chess;
 
 public class KnightEvaluation extends PieceEvaluation {
 
-	public KnightEvaluation() {
-		super();
-		this.setKnightEvaluation();
-	}
-
-	public KnightEvaluation(Board b, int color) {
-		super(b);
+	public KnightEvaluation(int color) {
+		super(color);
 		this.setKnightEvaluation();
 		if (color == Board.black) {
 			this.mirrorForBlack();

@@ -1,13 +1,9 @@
 package main.java.com.chess;
 
 public class RookEvaluation extends PieceEvaluation {
-	public RookEvaluation() {
-		super();
-		this.setRookEvaluation();
-	}
 
-	public RookEvaluation(Board b, int color) {
-		super(b);
+	public RookEvaluation(int color) {
+		super(color);
 		this.setRookEvaluation();
 		if (color == Board.black) {
 			this.mirrorForBlack();

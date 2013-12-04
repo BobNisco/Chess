@@ -1,5 +1,6 @@
 package test.java.com.chess;
 
+import main.java.com.chess.Board;
 import main.java.com.chess.PawnEvaluation;
 import org.junit.After;
 import org.junit.Before;
@@ -12,7 +13,7 @@ public class PieceEvaluationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		p = new PawnEvaluation();
+
 	}
 
 	@After
@@ -22,6 +23,7 @@ public class PieceEvaluationTest {
 
 	@Test
 	public void testPawnEvaluationMirrorForBlack() throws Exception {
+		p = new PawnEvaluation(Board.black);
 		int[][] expected = new int[8][8];
 		expected[7][7] = 70;
 		expected[7][6] = 70;
@@ -87,8 +89,6 @@ public class PieceEvaluationTest {
 		expected[0][2] = 0;
 		expected[0][1] = 0;
 		expected[0][0] = 0;
-		// Do the mirroring
-		p.mirrorForBlack();
 		assertArrayEquals(expected, p.b.board);
 	}
 }

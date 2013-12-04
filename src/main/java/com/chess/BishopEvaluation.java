@@ -2,12 +2,8 @@ package main.java.com.chess;
 
 public class BishopEvaluation extends PieceEvaluation {
 
-	public BishopEvaluation() {
-		super();
-		this.setBishopEvaluation();
-	}
-	public BishopEvaluation(Board b, int color) {
-		super(b);
+	public BishopEvaluation(int color) {
+		super(color);
 		this.setBishopEvaluation();
 		if (color == Board.black) {
 			this.mirrorForBlack();

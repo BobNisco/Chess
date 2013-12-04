@@ -2,13 +2,11 @@ package main.java.com.chess;
 
 public class PieceEvaluation {
 	public Board b;
+	public int color;
 
-	public PieceEvaluation() {
+	public PieceEvaluation(int color) {
 		this.b = new Board();
-	}
-
-	public PieceEvaluation(Board b) {
-		this.b = b;
+		this.color = color;
 	}
 
 	/**

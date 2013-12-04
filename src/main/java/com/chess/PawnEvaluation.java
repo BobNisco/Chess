@@ -2,13 +2,8 @@ package main.java.com.chess;
 
 public class PawnEvaluation extends PieceEvaluation {
 
-	public PawnEvaluation() {
-		super();
-		this.setPawnEvaluation();
-	}
-
-	public PawnEvaluation(Board b, int color) {
-		super(b);
+	public PawnEvaluation(int color) {
+		super(color);
 		this.setPawnEvaluation();
 		if (color == Board.black) {
 			this.mirrorForBlack();

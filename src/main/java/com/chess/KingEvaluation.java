@@ -1,21 +1,9 @@
 package main.java.com.chess;
 
-/**
- * Created with IntelliJ IDEA.
- * User: MichaelHunter
- * Date: 12/3/13
- * Time: 2:06 PM
- * To change this template use File | Settings | File Templates.
- */
 public class KingEvaluation extends PieceEvaluation {
 
-    public KingEvaluation() {
-        super();
-        this.setKingEvaluation();
-    }
-
-	public KingEvaluation(Board b, int color) {
-		super(b);
+	public KingEvaluation(int color) {
+		super(color);
 		this.setKingEvaluation();
 		if (color == Board.black) {
 			this.mirrorForBlack();

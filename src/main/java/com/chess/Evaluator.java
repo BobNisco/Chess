@@ -7,25 +7,33 @@ public class Evaluator {
 
 		try {
 			for (int rank = 0; rank < b.board.length; rank++) {
-				for (int file = 0; file < b.board.length; file++) {
+				for (int file = 0; file < b.board[rank].length; file++) {
 					switch (Math.abs(b.board[rank][file])) {
 						case 1:
-							PawnEvaluation p = new PawnEvaluation(b, color);
+							PawnEvaluation p = new PawnEvaluation(color);
+							sum += p.b.board[rank][file];
 							break;
 						case 2:
-							KnightEvaluation n = new KnightEvaluation(b, color);
+							KnightEvaluation n = new KnightEvaluation(color);
+							sum += n.b.board[rank][file];
 							break;
 						case 3:
-							BishopEvaluation bishop = new BishopEvaluation(b, color);
+							BishopEvaluation bishop = new BishopEvaluation(color);
+							sum += bishop.b.board[rank][file];
 							break;
 						case 4:
-							RookEvaluation r = new RookEvaluation(b, color);
+							RookEvaluation r = new RookEvaluation(color);
+							sum += r.b.board[rank][file];
 							break;
 						case 5:
-							QueenEvaluation q = new QueenEvaluation(b, color);
+							QueenEvaluation q = new QueenEvaluation(color);
+							sum += q.b.board[rank][file];
 							break;
 						case 6:
-							KingEvaluation k = new KingEvaluation(b, color);
+							KingEvaluation k = new KingEvaluation(color);
+							sum += k.b.board[rank][file];
+							break;
+						case 0:
 							break;
 						default:
 							throw new Exception("Unknown piece");
