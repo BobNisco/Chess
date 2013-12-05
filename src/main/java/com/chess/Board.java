@@ -9,10 +9,6 @@ public class Board {
 	 * The board's spaces represented by integers for the pieces
 	 */
 	public int[][] board;
-	/**
-	 * Boolean that tells us if it is our turn or not
-	 */
-	public boolean isOurTurn;
 
 	/**
 	 * The integer values we'll use for our pieces
@@ -39,14 +35,12 @@ public class Board {
 
 	public Board() {
 		this.board = new int[8][8];
-		this.isOurTurn = false;
 		// Set the game state to the proper start chess state
 		this.setStartGameState();
 	}
 
 	public Board(Board b) {
 		this.board = b.board;
-		this.isOurTurn = false;
 	}
 
 	/**

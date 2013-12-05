@@ -20,6 +20,11 @@ public class Node implements Comparable<Node> {
 	}
 
 	@Override
+	public String toString() {
+		return "Node with evaluation of " + this.evaluation + "\n" + this.b;
+	}
+
+	@Override
 	public int compareTo(Node o) {
 		if (this.evaluation > o.evaluation) {
 			return 1;

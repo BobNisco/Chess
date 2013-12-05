@@ -15,7 +15,7 @@ public class MiniMax {
 
 	private static Node maxValue(Node n, int color, int depth) {
 		// Some sort of terminal test, still needs to be tweaked
-		if (n.evaluation > 1000 || depth < 0) {
+		if (depth < 0) {
 			return n;
 		}
 
@@ -26,8 +26,9 @@ public class MiniMax {
 		for (Move m : actions) {
 			Board tempBoard = new Board(n.b);
 			tempBoard.handleMove(m);
+			System.out.println(tempBoard);
 			Node tempNode = new Node(tempBoard, Evaluator.evaluateBoard(tempBoard, color));
-			Node minNode = minValue(tempNode, color, depth);
+			Node minNode = minValue(tempNode, color, --depth);
 			if (minNode.compareTo(v) > 0) {
 				v = minNode;
 			}
@@ -36,7 +37,7 @@ public class MiniMax {
 	}
 
 	private static Node minValue(Node n, int color, int depth) {
-		if (n.evaluation < 1000 || depth < 0) {
+		if (depth < 0) {
 			return n;
 		}
 
@@ -48,7 +49,7 @@ public class MiniMax {
 			Board tempBoard = new Board(n.b);
 			tempBoard.handleMove(m);
 			Node tempNode = new Node(tempBoard, Evaluator.evaluateBoard(tempBoard, color));
-			Node maxNode = maxValue(tempNode, color, depth);
+			Node maxNode = maxValue(tempNode, color, --depth);
 			if (maxNode.compareTo(v) > 0) {
 				v = maxNode;
 			}
