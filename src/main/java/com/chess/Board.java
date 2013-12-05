@@ -40,7 +40,7 @@ public class Board {
 	}
 
 	public Board(Board b) {
-		this.board = b.board;
+		this.board = copyBoard(b);
 	}
 
 	/**
@@ -116,15 +116,20 @@ public class Board {
 	}
 
 	public void handleMove(Move m) {
-		int[][] oldBoard = new int[8][8];
-		for (int rank = 0; rank < board.length; rank++) {
-			for (int file = 0; file < board[rank].length; file++) {
-				oldBoard[rank][file] = board[rank][file];
-			}
-		}
+		int[][] oldBoard = copyBoard(this);
 
 		this.board[m.end.rank][m.end.file] = oldBoard[m.start.rank][m.start.file];
 		this.board[m.start.rank][m.start.file] = Board.empty;
+	}
+
+	private int[][] copyBoard(Board b) {
+		int[][] oldBoard = new int[8][8];
+		for (int rank = 0; rank < b.board.length; rank++) {
+			for (int file = 0; file < b.board[rank].length; file++) {
+				oldBoard[rank][file] = b.board[rank][file];
+			}
+		}
+		return oldBoard;
 	}
 
 	/**
