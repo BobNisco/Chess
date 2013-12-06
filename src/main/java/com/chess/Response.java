@@ -30,4 +30,12 @@ public class Response {
 		this.lastmovenumber = lastmovenumber;
 		this.lastmove = lastmove;
 	}
+
+	@Override
+	public String toString() {
+		return "Ready: " + this.ready +
+				"\nsecondsleft: " + this.secondsleft +
+				"\nlastmovenumber: " + this.lastmovenumber +
+				"\nlastmove: " + this.lastmove;
+	}
 }

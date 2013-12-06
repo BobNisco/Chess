@@ -41,6 +41,7 @@ public class MoveHandler {
 
 	public static String convertIntToServerChar(int piece) {
 		piece = Math.abs(piece);
+		System.out.println(piece);
 		switch (piece) {
 			case 1:
 				return "P";

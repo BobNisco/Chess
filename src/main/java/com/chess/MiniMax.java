@@ -6,11 +6,7 @@ public class MiniMax {
 
 	public static Node performMiniMax(Board b, int color, int depth) {
 		Node root = new Node(b, Evaluator.evaluateBoard(b, color));
-		if (color == Board.white) {
-			return maxValue(root, color, depth);
-		} else {
-			return minValue(root, color, depth);
-		}
+		return maxValue(root, color, depth);
 	}
 
 	private static Node maxValue(Node n, int color, int depth) {
@@ -22,14 +18,19 @@ public class MiniMax {
 		Node v = new Node();
 		v.evaluation = Integer.MIN_VALUE;
 
+		int opponentColor = 0;
+		if (color == Board.white) {
+			opponentColor = Board.black;
+		} else if (color == Board.black) {
+			opponentColor = Board.white;
+		}
+
 		ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(n.b, color);
 		for (Move m : actions) {
 			Board tempBoard = new Board(n.b);
 			tempBoard.handleMove(m);
-//			System.out.println("!!!!! MAX VALUE !!!!!!!!");
-//			System.out.println(tempBoard);
 			Node tempNode = new Node(tempBoard, m, Evaluator.evaluateBoard(tempBoard, color));
-			Node minNode = minValue(tempNode, color, depth - 1);
+			Node minNode = minValue(tempNode, opponentColor, depth - 1);
 			if (minNode.compareTo(v) > 0) {
 				v = tempNode;
 			}
@@ -52,14 +53,12 @@ public class MiniMax {
 			opponentColor = Board.white;
 		}
 
-		ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(n.b, opponentColor);
+		ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(n.b, color);
 		for (Move m : actions) {
 			Board tempBoard = new Board(n.b);
 			tempBoard.handleMove(m);
-//			System.out.println("!!!!! MIN VALUE !!!!!!!!");
-//			System.out.println(tempBoard);
-			Node tempNode = new Node(tempBoard, m, Evaluator.evaluateBoard(tempBoard, opponentColor));
-			Node maxNode = maxValue(tempNode, color, depth - 1);
+			Node tempNode = new Node(tempBoard, m, Evaluator.evaluateBoard(tempBoard, color));
+			Node maxNode = maxValue(tempNode, opponentColor, depth - 1);
 			if (maxNode.compareTo(v) < 0) {
 				v = tempNode;
 			}
