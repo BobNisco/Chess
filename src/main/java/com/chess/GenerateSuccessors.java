@@ -14,23 +14,18 @@ public class GenerateSuccessors {
 	 */
 	public static ArrayList<Move> pawn(Board b, int color) {
 		ArrayList<Move> moves = new ArrayList<Move>();
-		// Set the piece we want to look for to the WhitePawn
-		int piece = Board.whitePawn;
-		// But if the color passed in is -1, we want to look for the black pawn
-		if (color == Board.black) {
-			piece = Board.blackPawn;
-		}
+		// Figure out which piece we want to find
+		int piece = (color == Board.white) ? Board.whitePawn : Board.blackPawn;
+		int opponentColor = Board.opponentColor(color);
 		ArrayList<Position> pieces = findPieces(b, piece);
 		// Some variables we will use for moving the piece in the loop
 		// This is defaulted to the case of white
 		int beginningRank = 6;
 		int forwardMove = -1;
-		int opponentColor = Board.black;
 		if (color == Board.black) {
 			// Handle the case of black
 			beginningRank = 1;
 			forwardMove = 1;
-			opponentColor = Board.white;
 		}
 
 		for (Position p : pieces) {
@@ -88,22 +83,15 @@ public class GenerateSuccessors {
 
 	public static ArrayList<Move> rook(Board b, int color) {
 		ArrayList<Move> moves = new ArrayList<Move>();
-		// Set the piece we want to look for to the WhitePawn
-		int piece = Board.whiteRook;
-		// But if the color passed in is -1, we want to look for the black pawn
-		if (color == Board.black) {
-			piece = Board.blackRook;
-		}
-		int opponentColor = Board.black;
-		if (color == Board.black) {
-			opponentColor = Board.white;
-		}
+		// Set the piece we want to look for
+		int piece = (color == Board.white) ? Board.whiteRook : Board.blackRook;
+		int opponentColor = Board.opponentColor(color);
 
 		ArrayList<Position> pieces = findPieces(b, piece);
 
 		for (Position p : pieces) {
 			// Handle all possible vertical (file) moves down the board
-			for (int file = p.file; file < b.board[p.rank].length; file++) {
+			for (int file = p.file + 1; file < b.board[p.rank].length; file++) {
 				Position currentPosition = new Position(p.rank, file);
 				boolean shouldKeepGoing = handleRookMove(b, moves, p, currentPosition, opponentColor, piece);
 				if (!shouldKeepGoing) {
@@ -111,7 +99,7 @@ public class GenerateSuccessors {
 				}
 			}
 			// Handle all possible vertical (file) moves up the board
-			for (int file = p.file; file >= 0; file--) {
+			for (int file = p.file - 1; file >= 0; file--) {
 				Position currentPosition = new Position(p.rank, file);
 				boolean shouldKeepGoing = handleRookMove(b, moves, p, currentPosition, opponentColor, piece);
 				if (!shouldKeepGoing) {
@@ -119,16 +107,16 @@ public class GenerateSuccessors {
 				}
 			}
 
-			// Handle all possible horizontal (rank) moves down the board
-			for (int rank = p.rank; rank < b.board.length; rank++) {
+			// Handle all possible horizontal (rank) moves to the right
+			for (int rank = p.rank + 1; rank < b.board.length; rank++) {
 				Position currentPosition = new Position(rank, p.file);
 				boolean shouldKeepGoing = handleRookMove(b, moves, p, currentPosition, opponentColor, piece);
 				if (!shouldKeepGoing) {
 					break;
 				}
 			}
-			// Handle all possible horizontal (rank) moves up the board
-			for (int rank = p.rank; rank >= 0; rank--) {
+			// Handle all possible horizontal (rank) moves to the left
+			for (int rank = p.rank - 1; rank >= 0; rank--) {
 				Position currentPosition = new Position(rank, p.file);
 				boolean shouldKeepGoing = handleRookMove(b, moves, p, currentPosition, opponentColor, piece);
 				if (!shouldKeepGoing) {
@@ -141,10 +129,6 @@ public class GenerateSuccessors {
 	}
 
 	private static boolean handleRookMove(Board b, ArrayList<Move> moves, Position p, Position currentPosition, int opponentColor, int piece) {
-		// TODO: Fix this, don't want to mix pieces
-		if (b.currentPieceInPosition(currentPosition) == piece) {
-			return true;
-		}
 		if (b.spaceHasOpponent(currentPosition, opponentColor)) {
 			// There is an opponent here, this will be a possible move
 			moves.add(new Move(p, currentPosition));
@@ -163,15 +147,9 @@ public class GenerateSuccessors {
 
 	public static ArrayList<Move> bishop(Board b, int color) {
 		ArrayList<Move> moves = new ArrayList<Move>();
-		int piece = Board.whiteBishop;
-		if (color == Board.black) {
-			piece = Board.blackBishop;
-		}
+		int piece = (color == Board.white) ? Board.whiteBishop : Board.blackBishop;
 		ArrayList<Position> pieces = findPieces(b, piece);
-		int opponentColor = Board.black;
-		if (color == Board.black) {
-			opponentColor = Board.white;
-		}
+		int opponentColor = Board.opponentColor(color);
 
 		for (Position p : pieces) {
 			// Handle any up/left moves
@@ -243,7 +221,7 @@ public class GenerateSuccessors {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		int piece = (color == Board.white) ? Board.whiteKnight : Board.blackKnight;
 		ArrayList<Position> pieces = findPieces(b, piece);
-		int opponentColor = (color == Board.white) ? Board.black : Board.white;
+		int opponentColor = Board.opponentColor(color);
 
 		for (Position p : pieces) {
 			// Move up 2, left 1
@@ -309,7 +287,7 @@ public class GenerateSuccessors {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		int piece = (color == Board.white) ? Board.whiteQueen : Board.blackQueen;
 		ArrayList<Position> pieces = findPieces(b, piece);
-		int opponentColor = (color == Board.white) ? Board.black : Board.white;
+		int opponentColor = Board.opponentColor(color);
 
 		for (Position p : pieces) {
 			// Move left
@@ -416,7 +394,7 @@ public class GenerateSuccessors {
 		ArrayList<Move> moves = new ArrayList<Move>();
 		int piece = (color == Board.white) ? Board.whiteKing : Board.blackKing;
 		ArrayList<Position> pieces = findPieces(b, piece);
-		int opponentColor = (color == Board.white) ? Board.black : Board.white;
+		int opponentColor = Board.opponentColor(color);
 
 		for (Position p : pieces) {
 			// Move up

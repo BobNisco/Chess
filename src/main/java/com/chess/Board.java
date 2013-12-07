@@ -95,31 +95,44 @@ public class Board {
 	}
 
 	public boolean spaceIsEmpty(Position p) {
-		return this.board[p.rank][p.file] == Board.empty;
+		try {
+			return this.board[p.rank][p.file] == Board.empty;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public boolean spaceHasOpponent(Position p, int opponentColor) {
-		if (opponentColor == Board.white) {
-			if (this.board[p.rank][p.file] > 0) {
-				return true;
+		try {
+			if (opponentColor == Board.white) {
+				if (this.board[p.rank][p.file] > 0) {
+					return true;
+				}
+			} else {
+				if (this.board[p.rank][p.file] < 0) {
+					return true;
+				}
 			}
-		} else {
-			if (this.board[p.rank][p.file] < 0) {
-				return true;
-			}
+			return false;
+		} catch (Exception e) {
+			return false;
 		}
-		return false;
 	}
 
 	public int currentPieceInPosition(Position p) {
 		return this.board[p.rank][p.file];
 	}
 
-	public void handleMove(Move m) {
+	public boolean handleMove(Move m) {
 		int[][] oldBoard = copyBoard(this);
-
-		this.board[m.end.rank][m.end.file] = oldBoard[m.start.rank][m.start.file];
-		this.board[m.start.rank][m.start.file] = Board.empty;
+		try {
+			this.board[m.end.rank][m.end.file] = oldBoard[m.start.rank][m.start.file];
+			this.board[m.start.rank][m.start.file] = Board.empty;
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	private int[][] copyBoard(Board b) {
@@ -148,6 +161,15 @@ public class Board {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Returns the integer for your opponent's color
+	 * @param color your color
+	 * @return
+	 */
+	public static int opponentColor(int color) {
+		return (color == Board.white) ? Board.black : Board.white;
 	}
 
 	/**
