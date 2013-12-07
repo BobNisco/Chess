@@ -147,11 +147,38 @@ public class PlayChess {
 		}
 	}
 
+	private static void playLocallyAgainstSelf() {
+		PlayChess whiteTeam = new PlayChess(Board.white);
+		PlayChess blackTeam = new PlayChess(Board.black);
+		while (true) {
+			System.out.println("MOVING FOR WHITE");
+			if (whiteTeam.board.gameIsOver()) {
+				System.out.println("Game over");
+				break;
+			}
+			Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, 2);
+			whiteTeam.board.handleMove(nextNode.m);
+			blackTeam.board.handleMove(nextNode.m);
+			System.out.println(whiteTeam.board + "\n\n");
+
+			System.out.println("MOVING FOR BLACK");
+			if (blackTeam.board.gameIsOver()) {
+				System.out.println("Game over");
+				break;
+			}
+			nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, 2);
+			whiteTeam.board.handleMove(nextNode.m);
+			blackTeam.board.handleMove(nextNode.m);
+			System.out.println(blackTeam.board);
+			System.out.println("----------------------------------");
+		}
+	}
+
 	public static void main(String[] args) {
 		if (args.length > 0) {
 			playAgainstSelfOnServer(Integer.parseInt(args[0]));
 		} else {
-			playLocallyAgainstRandomOpponent();
+			playLocallyAgainstSelf();
 		}
 	}
 }

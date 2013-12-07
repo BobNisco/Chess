@@ -11,13 +11,7 @@ public class Evaluator {
 
 	public static int evaluateBoard(Board b, int color) {
 		int sum = 0;
-
-		int opponentColor = 0;
-		if (color == Board.white) {
-			opponentColor = Board.black;
-		} else if (color == Board.black) {
-			opponentColor = Board.white;
-		}
+		int opponentColor = Board.opponentColor(color);
 
 		try {
 			for (int rank = 0; rank < b.board.length; rank++) {
@@ -25,33 +19,27 @@ public class Evaluator {
 					switch (Math.abs(b.board[rank][file])) {
 						case 1:
 							PawnEvaluation p = new PawnEvaluation(color);
-							sum += p.b.board[rank][file];
-							bounty(b, sum, rank, file, opponentColor);
+							sum += p.b.board[rank][file] + bounty(b, rank, file, opponentColor);
 							break;
 						case 2:
 							KnightEvaluation n = new KnightEvaluation(color);
-							sum += n.b.board[rank][file];
-							bounty(b, sum, rank, file, opponentColor);
+							sum += n.b.board[rank][file] + bounty(b, rank, file, opponentColor);
 							break;
 						case 3:
 							BishopEvaluation bishop = new BishopEvaluation(color);
-							sum += bishop.b.board[rank][file];
-							bounty(b, sum, rank, file, opponentColor);
+							sum += bishop.b.board[rank][file] + bounty(b, rank, file, opponentColor);
 							break;
 						case 4:
 							RookEvaluation r = new RookEvaluation(color);
-							sum += r.b.board[rank][file];
-							bounty(b, sum, rank, file, opponentColor);
+							sum += r.b.board[rank][file] + bounty(b, rank, file, opponentColor);
 							break;
 						case 5:
 							QueenEvaluation q = new QueenEvaluation(color);
-							sum += q.b.board[rank][file];
-							bounty(b, sum, rank, file, opponentColor);
+							sum += q.b.board[rank][file] + bounty(b, rank, file, opponentColor);
 							break;
 						case 6:
 							KingEvaluation k = new KingEvaluation(color);
-							sum += k.b.board[rank][file];
-							bounty(b, sum, rank, file, opponentColor);
+							sum += k.b.board[rank][file] + bounty(b, rank, file, opponentColor);
 							break;
 						case 0:
 							break;
@@ -67,28 +55,23 @@ public class Evaluator {
 		return sum;
 	}
 
-	private static void bounty(Board b, int sum, int rank, int file, int opponentColor) {
+	private static int bounty(Board b, int rank, int file, int opponentColor) {
 		if (b.spaceHasOpponent(new Position(rank, file), opponentColor)) {
 			switch (Math.abs(b.board[rank][file])) {
 				case 1:
-					sum += pawnBounty;
-					break;
+					return pawnBounty;
 				case 2:
-					sum += knightBounty;
-					break;
+					return knightBounty;
 				case 3:
-					sum += bishopBounty;
-					break;
+					return bishopBounty;
 				case 4:
-					sum += rookBounty;
-					break;
+					return rookBounty;
 				case 5:
-					sum += queenBounty;
-					break;
+					return queenBounty;
 				case 6:
-					sum += kingBounty;
-					break;
+					return kingBounty;
 			}
 		}
+		return 0;
 	}
 }
