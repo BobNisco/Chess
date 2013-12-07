@@ -132,6 +132,24 @@ public class Board {
 		return oldBoard;
 	}
 
+	public boolean gameIsOver() {
+		boolean foundWhiteKing = false;
+		boolean foundBlackKing = false;
+		for (int rank = 0; rank < this.board.length; rank++) {
+			for (int file = 0; file < this.board[rank].length; file++) {
+				if (this.board[rank][file] == Board.whiteKing) {
+					foundWhiteKing = true;
+				} else if (this.board[rank][file] == Board.blackKing) {
+					foundBlackKing = true;
+				}
+			}
+		}
+		if (!foundBlackKing || !foundWhiteKing) {
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Prints out the chess board in a nice 2D grid
 	 * @return string representing the state of the grid

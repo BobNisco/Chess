@@ -84,10 +84,13 @@ public class PlayChess {
 	private static void playAgainstSelfOnServer(int gameId) {
 		PlayChess whiteTeam = new PlayChess(Board.white, gameId, 1, "32c68cae");
 		PlayChess blackTeam = new PlayChess(Board.black, gameId, 2, "1a77594c");
-		for (int i = 0; i < 15; i++) {
+		while (true) {
 			System.out.println("POLLING AND MOVING FOR WHITE");
 			Response r = whiteTeam.poll();
 			System.out.println(r);
+			if (whiteTeam.board.gameIsOver()) {
+				break;
+			}
 			if (r.ready) {
 				if (r.lastmove != null && r.lastmove.length() > 0) {
 					MoveHandler.handleMove(whiteTeam.board, r);
@@ -99,6 +102,9 @@ public class PlayChess {
 			System.out.println("POLLING AND MOVING FOR BLACK");
 			r = blackTeam.poll();
 			System.out.println(r);
+			if (blackTeam.board.gameIsOver()) {
+				break;
+			}
 			if (r.ready) {
 				if (r.lastmove != null) {
 					MoveHandler.handleMove(blackTeam.board, r);
@@ -113,22 +119,35 @@ public class PlayChess {
 
 	private static void playLocallyAgainstRandomOpponent() {
 		Random randomGenerator = new Random();
-		PlayChess play = new PlayChess(Board.white);
-		System.out.println(play.board);
-		int numberOfMoves = 12;
-		for (int i = 0; i < numberOfMoves; i++) {
-			Node nextNode = MiniMax.performMiniMax(play.board, play.color, 2);
-			play.board.handleMove(nextNode.m);
-			System.out.println(play.board + "\n\n");
-			ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(play.board, Board.black);
+		PlayChess whiteTeam = new PlayChess(Board.white);
+		while (true) {
+			System.out.println("MOVING FOR WHITE");
+			if (whiteTeam.board.gameIsOver()) {
+				System.out.println("Game over");
+				break;
+			}
+			Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, 2);
+			whiteTeam.board.handleMove(nextNode.m);
+			System.out.println(whiteTeam.board + "\n\n");
+
+			System.out.println("MOVING FOR BLACK");
+			if (whiteTeam.board.gameIsOver()) {
+				System.out.println("Game over");
+				break;
+			}
+			ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(whiteTeam.board, Board.black);
 			int index = randomGenerator.nextInt(actions.size());
-			play.board.handleMove(actions.get(index));
-			System.out.println(play.board);
+			whiteTeam.board.handleMove(actions.get(index));
+			System.out.println(whiteTeam.board);
 			System.out.println("----------------------------------");
 		}
 	}
 
 	public static void main(String[] args) {
-		playLocallyAgainstRandomOpponent();
+		if (args.length > 0) {
+			playAgainstSelfOnServer(Integer.parseInt(args[0]));
+		} else {
+			playLocallyAgainstRandomOpponent();
+		}
 	}
 }
