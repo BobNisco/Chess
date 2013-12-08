@@ -95,7 +95,7 @@ public class PlayChess {
 				if (r.lastmove != null && r.lastmove.length() > 0) {
 					MoveHandler.handleMove(whiteTeam.board, r);
 				}
-				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, 2);
+				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, 4);
 				whiteTeam.move(MoveHandler.convertMoveToServerNotation(whiteTeam.board, nextNode.m));
 				whiteTeam.board.handleMove(nextNode.m);
 			}
@@ -109,7 +109,7 @@ public class PlayChess {
 				if (r.lastmove != null) {
 					MoveHandler.handleMove(blackTeam.board, r);
 				}
-				Node nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, 2);
+				Node nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, 4);
 				System.out.println(nextNode);
 				blackTeam.move(MoveHandler.convertMoveToServerNotation(blackTeam.board, nextNode.m));
 				blackTeam.board.handleMove(nextNode.m);
@@ -127,7 +127,7 @@ public class PlayChess {
 					System.out.println("Game over");
 					break;
 				}
-				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, 2);
+				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, 4);
 				whiteTeam.board.handleMove(nextNode.m);
 				System.out.println(whiteTeam.board + "\n\n");
 
@@ -156,7 +156,7 @@ public class PlayChess {
 				System.out.println("Game over");
 				break;
 			}
-			Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, 2);
+			Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, 4);
 			whiteTeam.board.handleMove(nextNode.m);
 			blackTeam.board.handleMove(nextNode.m);
 			System.out.println(whiteTeam.board + "\n\n");
@@ -166,7 +166,7 @@ public class PlayChess {
 				System.out.println("Game over");
 				break;
 			}
-			nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, 2);
+			nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, 4);
 			whiteTeam.board.handleMove(nextNode.m);
 			blackTeam.board.handleMove(nextNode.m);
 			System.out.println(blackTeam.board);
