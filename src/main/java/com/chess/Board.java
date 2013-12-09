@@ -163,6 +163,29 @@ public class Board {
 		return false;
 	}
 
+	private static boolean handleIsPawnPromotion(Board b, Move m, int color) {
+		if (color == Board.white) {
+			if ((m.start.rank == 1 && m.end.rank == 0) &&
+					b.currentPieceInPosition(m.end) == Board.whitePawn) {
+				return true;
+			}
+		} else if (color == Board.black) {
+			if ((m.start.rank == 6 && m.end.rank == 7) &&
+					b.currentPieceInPosition(m.end) == Board.blackPawn) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isPawnPromotion(Move m, int color) {
+		return handleIsPawnPromotion(this, m, color);
+	}
+
+	public static boolean isPawnPromotion(Board b, Move m, int color) {
+		return handleIsPawnPromotion(b, m, color);
+	}
+
 	/**
 	 * Returns the integer for your opponent's color
 	 * @param color your color

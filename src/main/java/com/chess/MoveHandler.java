@@ -70,26 +70,17 @@ public class MoveHandler {
 		int endFile = fileToFileIntegers.get(move.lastmove.substring(3, 4));
 		int endRow = convertServerRow(move.lastmove.substring(4, 5));
 
+		int[][] oldBoard = b.board.clone();
 		if (move.lastmove.length() == 6) {
-			// TODO: Handle the promotion
+			// Promotion!
 			// For example Pb7b8Q where the pawn is promoted to a queen.
 			// Type of piece for promotion ∈ {Q, R, B, N}
+			int newPiece = convertLetterToPieceInt(move.lastmove.substring(5, 6)) * getColorOfPiece(b, new Position(startRow, startFile));
+			b.board[endRow][endFile] = newPiece;
+		} else {
+			// No promotion, just move the piece from the original space to the new space
+			b.board[endRow][endFile] = oldBoard[startRow][startFile];
 		}
-
-		/* This is what the start board is with coordinates
-		-4(0,0) -2(0,1) -3(0,2) -5(0,3) -6(0,4) -3(0,5) -2(0,6) -4(0,7)
-		-1(1,0) -1(1,1) -1(1,2) -1(1,3) -1(1,4) -1(1,5) -1(1,6) -1(1,7)
-		0(2,0) 0(2,1) 0(2,2) 0(2,3) 0(2,4) 0(2,5) 0(2,6) 0(2,7)
-		0(3,0) 0(3,1) 0(3,2) 0(3,3) 0(3,4) 0(3,5) 0(3,6) 0(3,7)
-		0(4,0) 0(4,1) 0(4,2) 0(4,3) 0(4,4) 0(4,5) 0(4,6) 0(4,7)
-		0(5,0) 0(5,1) 0(5,2) 0(5,3) 0(5,4) 0(5,5) 0(5,6) 0(5,7)
-		1(6,0) 1(6,1) 1(6,2) 1(6,3) 1(6,4) 1(6,5) 1(6,6) 1(6,7)
-		4(7,0) 2(7,1) 3(7,2) 6(7,3) 5(7,4) 3(7,5) 2(7,6) 4(7,7)
-		 */
-
-		int[][] oldBoard = b.board.clone();
-		// Move the piece from the original space to the new space
-		b.board[endRow][endFile] = oldBoard[startRow][startFile];
 		// Set the original space to empty
 		b.board[startRow][startFile] = b.empty;
 	}
@@ -120,7 +111,17 @@ public class MoveHandler {
 		serverNotation += convertRowToServerRow(m.start.rank);
 		serverNotation += fileIntegerToFile.get(m.end.file);
 		serverNotation += convertRowToServerRow(m.end.rank);
-		// TODO: Handle promotion
+		// For promotion stuff
+		int color = MoveHandler.getColorOfPiece(b, m.end);
+		if (Board.isPawnPromotion(b, m, color)) {
+			// Just assume that we want to promote to the queen.
+			// Can tweak later if we feel inclined to do so.
+			if (color == Board.white) {
+				serverNotation += convertIntToServerChar(Board.whiteQueen);
+			} else if (color == Board.black) {
+				serverNotation += convertIntToServerChar(Board.blackQueen);
+			}
+		}
 		return serverNotation;
 	}
 
@@ -173,5 +174,31 @@ public class MoveHandler {
 			}
 		}
 		return p;
+	}
+
+	public static int getColorOfPiece(Board b, Position p) {
+		if (b.board[p.rank][p.file] < 0) {
+			return Board.black;
+		} else if (b.board[p.rank][p.file] > 0) {
+			return Board.white;
+		}
+		return 0;
+	}
+
+	public static int convertLetterToPieceInt(String letter) {
+		if (letter.equals("P")) {
+			return 1;
+		} else if (letter.equals("N")) {
+			return 2;
+		} else if (letter.equals("B")) {
+			return 3;
+		} else if (letter.equals("R")) {
+			return 4;
+		} else if (letter.equals("Q")) {
+			return 5;
+		} else if (letter.equals("K")) {
+			return 6;
+		}
+		return 0;
 	}
 }
