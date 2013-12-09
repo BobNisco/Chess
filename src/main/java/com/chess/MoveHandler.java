@@ -41,7 +41,6 @@ public class MoveHandler {
 
 	public static String convertIntToServerChar(int piece) {
 		piece = Math.abs(piece);
-		System.out.println(piece);
 		switch (piece) {
 			case 1:
 				return "P";
@@ -112,7 +111,7 @@ public class MoveHandler {
 		serverNotation += fileIntegerToFile.get(m.end.file);
 		serverNotation += convertRowToServerRow(m.end.rank);
 		// For promotion stuff
-		int color = MoveHandler.getColorOfPiece(b, m.end);
+		int color = MoveHandler.getColorOfPiece(b, m.start);
 		if (Board.isPawnPromotion(b, m, color)) {
 			// Just assume that we want to promote to the queen.
 			// Can tweak later if we feel inclined to do so.

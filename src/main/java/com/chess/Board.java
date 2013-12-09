@@ -166,12 +166,12 @@ public class Board {
 	private static boolean handleIsPawnPromotion(Board b, Move m, int color) {
 		if (color == Board.white) {
 			if ((m.start.rank == 1 && m.end.rank == 0) &&
-					b.currentPieceInPosition(m.end) == Board.whitePawn) {
+					b.currentPieceInPosition(m.start) == Board.whitePawn) {
 				return true;
 			}
 		} else if (color == Board.black) {
 			if ((m.start.rank == 6 && m.end.rank == 7) &&
-					b.currentPieceInPosition(m.end) == Board.blackPawn) {
+					b.currentPieceInPosition(m.start) == Board.blackPawn) {
 				return true;
 			}
 		}

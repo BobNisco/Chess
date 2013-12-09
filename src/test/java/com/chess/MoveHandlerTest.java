@@ -7,7 +7,7 @@ import main.java.com.chess.Response;
 import org.junit.*;
 import static org.junit.Assert.* ;
 
-public class BoardTest {
+public class MoveHandlerTest {
 
 	private Board b;
 
@@ -62,6 +62,28 @@ public class BoardTest {
 	}
 
 	@Test
+	public void testHandleMove04() throws Exception {
+		b.board[1][1] = Board.whitePawn;
+		b.board[6][1] = Board.empty;
+		b.board[0][1] = Board.empty;
+		Response r = new Response();
+		r.lastmove = "Pb7b8Q";
+		MoveHandler.handleMove(b, r);
+		assertEquals("The board should have promoted a white pawn to a white queen", b.whiteQueen, b.board[0][1]);
+	}
+
+	@Test
+	public void testHandleMove05() throws Exception {
+		b.board[6][1] = Board.blackPawn;
+		b.board[1][1] = Board.empty;
+		b.board[7][1] = Board.empty;
+		Response r = new Response();
+		r.lastmove = "Pb2b1Q";
+		MoveHandler.handleMove(b, r);
+		assertEquals("The board should have promoted a black pawn to a black queen", b.blackQueen, b.board[7][1]);
+	}
+
+	@Test
 	public void testConvertMoveToServerNotation00() throws Exception {
 		Move m = new Move(6, 3, 5, 3);
 		String serverMove = MoveHandler.convertMoveToServerNotation(b, m);
@@ -87,5 +109,25 @@ public class BoardTest {
 		Move m = new Move(0, 1, 2, 2);
 		String serverMove = MoveHandler.convertMoveToServerNotation(b, m);
 		assertEquals("The move of a knight from [0][1] to [2][2] must be Nb8c6", "Nb8c6", serverMove);
+	}
+
+	@Test
+	public void testConvertMoveToServerNotation04() throws Exception {
+		b.board[1][1] = Board.whitePawn;
+		b.board[6][1] = Board.empty;
+		b.board[0][1] = Board.empty;
+		Move m = new Move(1, 1, 0, 1);
+		String serverMove = MoveHandler.convertMoveToServerNotation(b, m);
+		assertEquals("The move of a pawn from [1][1] to [0][1] must be Pb7b8Q", "Pb7b8Q", serverMove);
+	}
+
+	@Test
+	public void testConvertMoveToServerNotation05() throws Exception {
+		b.board[6][1] = Board.blackPawn;
+		b.board[1][1] = Board.empty;
+		b.board[7][1] = Board.empty;
+		Move m = new Move(6, 1, 7, 1);
+		String serverMove = MoveHandler.convertMoveToServerNotation(b, m);
+		assertEquals("The move of a pawn from [6][1] to [7][1] must be Pb2b1Q", "Pb2b1Q", serverMove);
 	}
 }
