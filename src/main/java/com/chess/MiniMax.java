@@ -6,7 +6,7 @@ public class MiniMax {
 
 	public static Node performMiniMax(Board b, int color, int depth) {
 		Node root = new Node(b, Evaluator.evaluateBoard(b, color));
-		return maxValue(root, color, depth, Integer.MAX_VALUE, Integer.MIN_VALUE);
+		return maxValue(root, color, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
 
 	private static Node maxValue(Node n, int color, int depth, int alpha, int beta) {
@@ -16,7 +16,7 @@ public class MiniMax {
 		}
 
 		Node a = new Node();
-		a.evaluation = Integer.MIN_VALUE;
+		a.evaluation = alpha;
 		int opponentColor = Board.opponentColor(color);
 
 		ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(n.b, color);
@@ -42,7 +42,7 @@ public class MiniMax {
 		}
 
 		Node b = new Node();
-		b.evaluation = Integer.MAX_VALUE;
+		b.evaluation = beta;
 		int opponentColor = Board.opponentColor(color);
 
 		ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(n.b, color);
