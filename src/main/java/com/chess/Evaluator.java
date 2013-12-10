@@ -9,18 +9,25 @@ public class Evaluator {
 	public static int knightBounty = 30;
 	public static int pawnBounty = 10;
 
-	public static int fullEvaluate(Board b, int color) {
-		return evaluateBoard(b, color) - evaluateBoard(b, Board.opponentColor(color));
+	public static int fullEvaluate(Board b, Move m, int color) {
+		return evaluateBoard(b, m, color);
+				//- evaluateBoard(b, Board.opponentColor(color));
 	}
 
-	public static int evaluateBoard(Board b, int color) {
+	public static int evaluateBoard(Board b, Move m, int color) {
 		int sum = 0;
 		int opponentColor = Board.opponentColor(color);
 
 		try {
 			for (int rank = 0; rank < b.board.length; rank++) {
 				for (int file = 0; file < b.board[rank].length; file++) {
-					sum += PieceEvaluation.evaluatePiece(b.board[rank][file], rank, file, color) + bounty(b, rank, file, opponentColor);
+					boolean isCapture = Board.isCaptureMove(b, m, color);
+					if (isCapture) {
+						int bounty = bounty(b, m.end.rank, m.end.file, opponentColor);
+						sum += bounty;
+					}
+					b.handleMove(m);
+					sum += PieceEvaluation.evaluatePiece(b.board[rank][file], rank, file, color);
 				}
 			}
 		} catch (Exception e) {

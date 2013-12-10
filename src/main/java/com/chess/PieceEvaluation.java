@@ -2,7 +2,7 @@ package main.java.com.chess;
 
 public class PieceEvaluation {
 
-	public static int[][] whiteBishop = {
+	public static final int[][] whiteBishop = {
 			{-20, -10, -10, -10, -10, -10, -10, -20},
 			{-10, 0, 0, 0, 0, 0, 0, -10},
 			{-10, 0, 5, 10, 10, 5, 0, -10},
@@ -13,9 +13,9 @@ public class PieceEvaluation {
 			{-20, -10, -10, -10, -10, -10, -10, -20}
 	};
 
-	public static int[][] blackBishop = mirrorForBlack(whiteBishop);
+	public static final int[][] blackBishop = mirrorForBlack(whiteBishop);
 
-	public static int[][] whiteKing = {
+	public static final int[][] whiteKing = {
 			{-30, -40, -40, -50, -50, -40, -40, -30},
 			{-30, -40, -40, -50, -50, -40, -40, -30},
 			{-30, -40, -40, -50, -50, -40, -40, -30},
@@ -26,9 +26,9 @@ public class PieceEvaluation {
 			{20, 30, 10, 0, 0, 10, 30, 20}
 	};
 
-	public static int[][] blackKing = mirrorForBlack(whiteKing);
+	public static final int[][] blackKing = mirrorForBlack(whiteKing);
 
-	public static int[][] whiteKnight = {
+	public static final int[][] whiteKnight = {
 			{-50, -40, -30, -30, -30, -30, -40, -50},
 			{-40, -20, 0, 0, 0, 0, -20, -40},
 			{-30, 0, 10, 15, 15, 10, 0, -30},
@@ -39,9 +39,9 @@ public class PieceEvaluation {
 			{-50, -40, -30, -30, -30, -30, -40, -50}
 	};
 
-	public static int[][] blackKnight = mirrorForBlack(whiteKnight);
+	public static final int[][] blackKnight = mirrorForBlack(whiteKnight);
 
-	public static int[][] whitePawn = {
+	public static final int[][] whitePawn = {
 			{70, 70, 70, 70, 70, 70, 70, 70},
 			{50, 50, 50, 50, 50, 50, 50, 50},
 			{10, 10, 20, 30, 30, 20, 10, 10},
@@ -52,9 +52,9 @@ public class PieceEvaluation {
 			{0, 0, 0, 0, 0, 0, 0, 0}
 	};
 
-	public static int[][] blackPawn = mirrorForBlack(whitePawn);
+	public static final int[][] blackPawn = mirrorForBlack(whitePawn);
 
-	public static int[][] whiteQueen = {
+	public static final int[][] whiteQueen = {
 			{-20, -10, -10, -5, -5, -10, -10, -20},
 			{-10, 0, 0, 0, 0, 0, 0, -10},
 			{-10, 0, 5, 5, 5, 5, 0, -10},
@@ -65,9 +65,9 @@ public class PieceEvaluation {
 			{-20, -10, -10, -5, -5, -10, -10, -20}
 	};
 
-	public static int[][] blackQueen = mirrorForBlack(whiteQueen);
+	public static final int[][] blackQueen = mirrorForBlack(whiteQueen);
 
-	public static int[][] whiteRook = {
+	public static final int[][] whiteRook = {
 			{0, 0, 0, 0, 0, 0, 0, 0},
 			{5, 10, 10, 10, 10, 10, 10, 5},
 			{-5, 0, 0, 0, 0, 0, 0, -5},

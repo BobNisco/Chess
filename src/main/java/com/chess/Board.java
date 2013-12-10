@@ -186,6 +186,20 @@ public class Board {
 		return handleIsPawnPromotion(b, m, color);
 	}
 
+	public static boolean isCaptureMove(Board b, Move m, int color) {
+		int opponentColor = opponentColor(color);
+		if (color == Board.white) {
+			if (b.board[m.end.rank][m.end.file] < 0) {
+				return true;
+			}
+		} else if (color == Board.black) {
+			if (b.board[m.end.rank][m.end.file] > 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Returns the integer for your opponent's color
 	 * @param color your color
