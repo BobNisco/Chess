@@ -124,10 +124,8 @@ public class Board {
 	}
 
 	public boolean handleMove(Move m) {
-		int[][] oldBoard = copyBoard(this);
 		try {
-			this.board[m.end.rank][m.end.file] = oldBoard[m.start.rank][m.start.file];
-			this.board[m.start.rank][m.start.file] = Board.empty;
+			MoveHandler.handleMove(this, new Response(MoveHandler.convertMoveToServerNotation(this, m)));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

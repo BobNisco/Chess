@@ -31,6 +31,13 @@ public class Response {
 		this.lastmove = lastmove;
 	}
 
+	public Response(String lastmove) {
+		this.ready = false;
+		this.secondsleft = -1;
+		this.lastmovenumber = -1;
+		this.lastmove = lastmove;
+	}
+
 	@Override
 	public String toString() {
 		return "Ready: " + this.ready +

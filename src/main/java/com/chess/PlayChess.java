@@ -187,7 +187,7 @@ public class PlayChess {
 				System.out.println("Game over");
 				break;
 			}
-			nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead);
+			nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, 2);
 			whiteTeam.board.handleMove(nextNode.m);
 			blackTeam.board.handleMove(nextNode.m);
 			System.out.println(blackTeam.board);
@@ -199,7 +199,7 @@ public class PlayChess {
 		if (args.length > 0) {
 			playAgainstOpponentOnServer(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), args[3]);
 		} else {
-			playLocallyAgainstRandomOpponent();
+			playLocallyAgainstSelf();
 		}
 	}
 }
