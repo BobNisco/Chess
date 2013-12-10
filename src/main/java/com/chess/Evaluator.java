@@ -66,39 +66,49 @@ public class Evaluator {
 		return 0;
 	}
 
-	private static int numberOfIsolatedPawns(Board b, int color) {
+	public static int numberOfIsolatedPawns(Board b, int color) {
 		int isolatedPawns = 0;
 
-		try {
-			for (int file = 0; file < b.board.length; file++) {
-				boolean pawnFound = false;
-				for (int rank = 0; rank < b.board[file].length; rank++) {
-					if (b.board[rank][file] == 1 * color) {
-						pawnFound = true;
-					}
+		for (int file = 0; file < b.board.length; file++) {
+			boolean pawnFound = false;
+			for (int rank = 0; rank < b.board[file].length; rank++) {
+				if (b.board[rank][file] == 1 * color) {
+					pawnFound = true;
 				}
+			}
 
-				if (pawnFound) {
-					boolean pawnFoundL = false;
+			if (pawnFound) {
+				boolean pawnFoundL = false;
+				if (file > 0) {
 					for (int rank = 0; rank < b.board[file - 1].length; rank++) {
 						if (b.board[rank][file - 1] == 1 * color) {
 							pawnFoundL = true;
 						}
 					}
-					boolean pawnFoundR = false;
+				}
+				boolean pawnFoundR = false;
+				if (file < 7) {
 					for (int rank = 0; rank < b.board[file + 1].length; rank++) {
 						if (b.board[rank][file + 1] == 1 * color) {
 							pawnFoundL = true;
 						}
 					}
+				}
 
+				if (file > 0 && file < 7) {
 					if (!pawnFoundL && !pawnFoundR) {
+						isolatedPawns++;
+					}
+				} else if (file == 7) {
+					if (!pawnFoundL) {
+						isolatedPawns++;
+					}
+				} else if (file == 0) {
+					if (!pawnFoundR) {
 						isolatedPawns++;
 					}
 				}
 			}
-		} catch (ArrayIndexOutOfBoundsException e) {
-
 		}
 
 		return isolatedPawns;

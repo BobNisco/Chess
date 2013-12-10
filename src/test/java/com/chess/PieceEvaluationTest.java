@@ -63,7 +63,6 @@ public class PieceEvaluationTest {
 		Board b = new Board();
 		b.board[5][0] = Board.blackPawn;
 		b.board[1][0] = Board.empty;
-		System.out.println(b);
 		int blockedPawns = Evaluator.numberOfBlockedPawns(b, Board.white);
 		assertEquals(1, blockedPawns);
 	}
@@ -85,8 +84,16 @@ public class PieceEvaluationTest {
 		Board b = new Board();
 		b.board[2][0] = Board.whitePawn;
 		b.board[5][0] = Board.empty;
-		System.out.println(b);
 		int blockedPawns = Evaluator.numberOfBlockedPawns(b, Board.black);
 		assertEquals(1, blockedPawns);
+	}
+
+	@Test
+	public void testIsolatedWhitePawns00() throws Exception {
+		Board b = new Board();
+		b.board[6][1] = Board.empty;
+		int isolatedPawns = Evaluator.numberOfIsolatedPawns(b, Board.white);
+		System.out.println(b);
+		assertEquals(1, isolatedPawns);
 	}
 }
