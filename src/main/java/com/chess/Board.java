@@ -200,6 +200,18 @@ public class Board {
 		return false;
 	}
 
+	public int numberOfPieces(int piece) {
+		int num = 0;
+		for (int i = 0; i < this.board.length; i++) {
+			for (int j = 0; j < this.board[i].length; j++) {
+				if (this.board[i][j] == piece) {
+					num++;
+				}
+			}
+		}
+		return num;
+	}
+
 	/**
 	 * Returns the integer for your opponent's color
 	 * @param color your color

@@ -118,29 +118,50 @@ public class PlayChess {
 		}
 	}
 
+	private static void playAgainstOpponentOnServer(int gameId, int color, int teamNumber, String secret) {
+		PlayChess ourTeam = new PlayChess(color, gameId, teamNumber, secret);
+		while (true) {
+			System.out.println("POLLING AND MOVING FOR " + color);
+			Response r = ourTeam.poll();
+			System.out.println(r);
+			if (ourTeam.board.gameIsOver()) {
+				break;
+			}
+			if (r.ready) {
+				if (r.lastmove != null && r.lastmove.length() > 0) {
+					MoveHandler.handleMove(ourTeam.board, r);
+				}
+				Node nextNode = MiniMax.performMiniMax(ourTeam.board, ourTeam.color, PlayChess.plyLookhead);
+				ourTeam.move(MoveHandler.convertMoveToServerNotation(ourTeam.board, nextNode.m));
+				ourTeam.board.handleMove(nextNode.m);
+			}
+		}
+	}
+
 	private static void playLocallyAgainstRandomOpponent() {
 		try{
 			Random randomGenerator = new Random();
-			PlayChess whiteTeam = new PlayChess(Board.white);
+			PlayChess blackTeam = new PlayChess(Board.black);
 			while (true) {
 				System.out.println("MOVING FOR WHITE");
-				if (whiteTeam.board.gameIsOver()) {
+				if (blackTeam.board.gameIsOver()) {
 					System.out.println("Game over");
 					break;
 				}
-				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, PlayChess.plyLookhead);
-				whiteTeam.board.handleMove(nextNode.m);
-				System.out.println(whiteTeam.board + "\n\n");
+				ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(blackTeam.board, Board.white);
+				int index = randomGenerator.nextInt(actions.size());
+				blackTeam.board.handleMove(actions.get(index));
+				System.out.println(blackTeam.board);
 
 				System.out.println("MOVING FOR BLACK");
-				if (whiteTeam.board.gameIsOver()) {
+				if (blackTeam.board.gameIsOver()) {
 					System.out.println("Game over");
 					break;
 				}
-				ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(whiteTeam.board, Board.black);
-				int index = randomGenerator.nextInt(actions.size());
-				whiteTeam.board.handleMove(actions.get(index));
-				System.out.println(whiteTeam.board);
+				Node nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead);
+				blackTeam.board.handleMove(nextNode.m);
+				System.out.println(blackTeam.board + "\n\n");
+
 				System.out.println("----------------------------------");
 			}
 		} catch (Exception e) {
@@ -177,7 +198,7 @@ public class PlayChess {
 
 	public static void main(String[] args) {
 		if (args.length > 0) {
-			playAgainstSelfOnServer(Integer.parseInt(args[0]));
+			playAgainstOpponentOnServer(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), args[3]);
 		} else {
 			playLocallyAgainstRandomOpponent();
 		}
