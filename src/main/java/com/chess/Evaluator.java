@@ -106,47 +106,148 @@ public class Evaluator {
 
 	public static int numberOfBlockedPawns(Board b, int color) {
 		int blockedPawns = 0;
-		try {
-			if (color == Board.white) {
-				for (int file = 0; file < b.board.length; file++) {
-					for (int rank = 0; rank < b.board[file].length; rank++) {
-						//System.out.println(b.board[rank][file]);
-						if (b.board[rank][file] == Board.whitePawn) {
-//							if (rank > 0) {
-//								int pieceAhead = b.board[rank - 1][file];
-//								if (file > 0) {
-//
-//								}
-//								if (file < 7) {
-//
-//								}
-//							}
-
-
-
-							int pieceAhead = b.board[rank - 1][file];
-							int pieceInTopLeft = b.board[rank - 1][file - 1];
-							int pieceInTopRight = b.board[rank - 1][file + 1];
-							//System.out.println("Ahead " + pieceAhead + " topLeft " + pieceInTopLeft + " topRight " + pieceInTopRight);
-							if (pieceAhead != Board.empty && (pieceInTopLeft > 0 || pieceInTopLeft == Board.empty) && (pieceInTopRight > 0 || pieceInTopRight == Board.empty)) {
+		if (color == Board.white) {
+			for (int file = 0; file < b.board.length; file++) {
+				for (int rank = 0; rank < b.board[file].length; rank++) {
+					if (b.board[rank][file] == Board.whitePawn) {
+						// Scenario 1
+						try {
+							if (b.board[rank - 1][file] != Board.empty && b.board[rank - 1][file - 1] == Board.empty && b.board[rank - 1][file + 1] == Board.empty) {
 								blockedPawns++;
+								break;
 							}
+						} catch (Exception e) {
 						}
-					}
-				}
-			} else if (color == Board.black) {
-				for (int file = 0; file < b.board.length; file++) {
-					for (int rank = 0; rank < b.board[file].length; rank++) {
-						if (b.board[rank][file] == Board.blackPawn) {
-							if (b.board[rank + 1][file] != Board.empty && b.board[rank + 1][file - 1] < 0 && b.board[rank + 1][file + 1] < 0) {
+						// Scenario 2
+						try {
+							if (b.board[rank - 1][file] != Board.empty && b.board[rank - 1][file - 1] > 0 && b.board[rank - 1][file + 1] == Board.empty) {
 								blockedPawns++;
+								break;
 							}
+						} catch (Exception e) {
+						}
+						// Scenario 3
+						try {
+							if (b.board[rank - 1][file] != Board.empty && b.board[rank - 1][file - 1] > 0 && b.board[rank - 1][file + 1] > 0) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 4
+						try {
+							if (b.board[rank - 1][file] != Board.empty && b.board[rank - 1][file - 1] == Board.empty && b.board[rank - 1][file + 1] > 0) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 5
+						try {
+							if (b.board[rank - 1][file] != Board.empty && b.board[rank - 1][file + 1] == Board.empty) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 6
+						try {
+							if (b.board[rank - 1][file] != Board.empty && b.board[rank - 1][file + 1] > 0) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 7
+						try {
+							if (b.board[rank - 1][file] != Board.empty && b.board[rank - 1][file - 1] == Board.empty) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 8
+						try {
+							if (b.board[rank - 1][file] != Board.empty && b.board[rank - 1][file - 1] > 0) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
 						}
 					}
 				}
 			}
-		} catch (ArrayIndexOutOfBoundsException e) {
-
+		} else if (color == Board.black) {
+			for (int file = 0; file < b.board.length; file++) {
+				for (int rank = 0; rank < b.board[file].length; rank++) {
+					if (b.board[rank][file] == Board.blackPawn) {
+						// Scenario 1
+						try {
+							if (b.board[rank + 1][file] != Board.empty && b.board[rank + 1][file - 1] == Board.empty && b.board[rank + 1][file + 1] == Board.empty) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 2
+						try {
+							if (b.board[rank + 1][file] != Board.empty && b.board[rank + 1][file - 1] < 0 && b.board[rank + 1][file + 1] == Board.empty) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 3
+						try {
+							if (b.board[rank + 1][file] != Board.empty && b.board[rank + 1][file - 1] < 0 && b.board[rank + 1][file + 1] < 0) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 4
+						try {
+							if (b.board[rank + 1][file] != Board.empty && b.board[rank + 1][file - 1] == Board.empty && b.board[rank + 1][file + 1] < 0) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 5
+						try {
+							if (b.board[rank + 1][file] != Board.empty && b.board[rank + 1][file + 1] == Board.empty) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 6
+						try {
+							if (b.board[rank + 1][file] != Board.empty && b.board[rank + 1][file + 1] < 0) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 7
+						try {
+							if (b.board[rank + 1][file] != Board.empty && b.board[rank + 1][file - 1] == Board.empty) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+						// Scenario 8
+						try {
+							if (b.board[rank + 1][file] != Board.empty && b.board[rank + 1][file - 1] < 0) {
+								blockedPawns++;
+								break;
+							}
+						} catch (Exception e) {
+						}
+					}
+				}
+			}
 		}
 		return blockedPawns;
 	}

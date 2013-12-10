@@ -141,27 +141,26 @@ public class PlayChess {
 	private static void playLocallyAgainstRandomOpponent() {
 		try{
 			Random randomGenerator = new Random();
-			PlayChess blackTeam = new PlayChess(Board.black);
+			PlayChess whiteTeam = new PlayChess(Board.white);
 			while (true) {
 				System.out.println("MOVING FOR WHITE");
-				if (blackTeam.board.gameIsOver()) {
+				if (whiteTeam.board.gameIsOver()) {
 					System.out.println("Game over");
 					break;
 				}
-				ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(blackTeam.board, Board.white);
-				int index = randomGenerator.nextInt(actions.size());
-				blackTeam.board.handleMove(actions.get(index));
-				System.out.println(blackTeam.board);
+				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, PlayChess.plyLookhead);
+				whiteTeam.board.handleMove(nextNode.m);
+				System.out.println(whiteTeam.board + "\n\n");
 
 				System.out.println("MOVING FOR BLACK");
-				if (blackTeam.board.gameIsOver()) {
+				if (whiteTeam.board.gameIsOver()) {
 					System.out.println("Game over");
 					break;
 				}
-				Node nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead);
-				blackTeam.board.handleMove(nextNode.m);
-				System.out.println(blackTeam.board + "\n\n");
-
+				ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(whiteTeam.board, Board.black);
+				int index = randomGenerator.nextInt(actions.size());
+				whiteTeam.board.handleMove(actions.get(index));
+				System.out.println(whiteTeam.board);
 				System.out.println("----------------------------------");
 			}
 		} catch (Exception e) {
