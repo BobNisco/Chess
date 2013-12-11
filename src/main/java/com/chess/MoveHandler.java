@@ -123,6 +123,7 @@ public class MoveHandler {
 				}
 			}
 		} catch (NullPointerException e) {
+			System.out.println("ERROR");
 			e.printStackTrace();
 		}
 		return serverNotation;
