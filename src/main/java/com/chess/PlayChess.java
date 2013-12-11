@@ -21,7 +21,7 @@ public class PlayChess {
 	public static int plyLookhead = 4;
 
 	public PlayChess(int color) {
-		this.board = new Board();
+		this.board = new Board(color);
 		this.color = color;
 		this.gameId = -1;
 		this.teamNumber = -1;
@@ -29,7 +29,7 @@ public class PlayChess {
 	}
 
 	public PlayChess(int color, int gameId, int teamNumber, String teamSecret) {
-		this.board = new Board();
+		this.board = new Board(color);
 		this.color = color;
 		this.gameId = gameId;
 		this.teamNumber = teamNumber;
@@ -231,7 +231,7 @@ public class PlayChess {
 		if (args.length > 0) {
 			playAgainstOpponentOnServer(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), args[3]);
 		} else {
-			playLocallyAgainstAsBlackRandomOpponent();
+			playLocallyAgainstRandomOpponent();
 		}
 	}
 }

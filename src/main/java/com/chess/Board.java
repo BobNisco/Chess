@@ -10,6 +10,8 @@ public class Board {
 	 */
 	public int[][] board;
 
+	public int color;
+
 	/**
 	 * The integer values we'll use for our pieces
 	 */
@@ -41,6 +43,17 @@ public class Board {
 
 	public Board(Board b) {
 		this.board = copyBoard(b);
+	}
+
+	public Board(int[][] board, int color) {
+		this.board = board;
+		this.color = color;
+	}
+
+	public Board(int color) {
+		this.board = new int[8][8];
+		this.setStartGameState();
+		this.color = color;
 	}
 
 	/**
