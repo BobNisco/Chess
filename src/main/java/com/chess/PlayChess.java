@@ -168,6 +168,38 @@ public class PlayChess {
 		}
 	}
 
+	private static void playLocallyAgainstAsBlackRandomOpponent() {
+		try{
+			Random randomGenerator = new Random();
+			PlayChess blackTeam = new PlayChess(Board.black);
+			while (true) {
+				System.out.println("MOVING FOR WHITE RANDOMLY");
+				if (blackTeam.board.gameIsOver()) {
+					System.out.println("Game over");
+					break;
+				}
+				ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(blackTeam.board, Board.white);
+				int index = randomGenerator.nextInt(actions.size());
+				blackTeam.board.handleMove(actions.get(index));
+				System.out.println(blackTeam.board);
+
+
+				System.out.println("MOVING FOR BLACK WITH MINIMAX");
+				if (blackTeam.board.gameIsOver()) {
+					System.out.println("Game over");
+					break;
+				}
+				Node nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead, new Response(900));
+				blackTeam.board.handleMove(nextNode.m);
+				System.out.println(blackTeam.board + "\n\n");
+
+				System.out.println("----------------------------------");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static void playLocallyAgainstSelf() {
 		PlayChess whiteTeam = new PlayChess(Board.white);
 		PlayChess blackTeam = new PlayChess(Board.black);
@@ -199,7 +231,7 @@ public class PlayChess {
 		if (args.length > 0) {
 			playAgainstOpponentOnServer(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), args[3]);
 		} else {
-			playLocallyAgainstSelf();
+			playLocallyAgainstAsBlackRandomOpponent();
 		}
 	}
 }

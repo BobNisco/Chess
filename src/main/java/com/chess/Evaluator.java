@@ -41,7 +41,7 @@ public class Evaluator {
 			ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(b, opponentColor);
 			sum += 0.1 * (numberOfSuccessors - actions.size());
 			// Adjust for the color
-			sum *= color;
+			//sum *= color;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
