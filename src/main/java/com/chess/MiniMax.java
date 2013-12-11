@@ -28,7 +28,7 @@ public class MiniMax {
 	public static Node performMiniMax(Board b, int color, int depth, Response r) {
 		Node root = new Node(b, Integer.MIN_VALUE);
 		Node move = null;
-		if (r.secondsleft < 60) {
+		if (r.secondsleft > 60) {
 			Future<Node> control = Executors.newSingleThreadExecutor().submit(new TimedJob(root, color, depth));
 
 			try {
