@@ -231,7 +231,7 @@ public class PlayChess {
 		if (args.length > 0) {
 			playAgainstOpponentOnServer(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), args[3]);
 		} else {
-			playLocallyAgainstRandomOpponent();
+			playLocallyAgainstSelf();
 		}
 	}
 }

@@ -103,24 +103,27 @@ public class MoveHandler {
 
 	public static String convertMoveToServerNotation(Board b, Move m) {
 		String serverNotation = "";
-		// Get the piece's letter notation and add it to the return string
-		// There was an NPE here, yo!
-		serverNotation += convertIntToServerChar(b.board[m.start.rank][m.start.file]);
-		// Get the file notation for the start row
-		serverNotation += fileIntegerToFile.get(m.start.file);
-		serverNotation += convertRowToServerRow(m.start.rank);
-		serverNotation += fileIntegerToFile.get(m.end.file);
-		serverNotation += convertRowToServerRow(m.end.rank);
-		// For promotion stuff
-		int color = MoveHandler.getColorOfPiece(b, m.start);
-		if (Board.isPawnPromotion(b, m, color)) {
-			// Just assume that we want to promote to the queen.
-			// Can tweak later if we feel inclined to do so.
-			if (color == Board.white) {
-				serverNotation += convertIntToServerChar(Board.whiteQueen);
-			} else if (color == Board.black) {
-				serverNotation += convertIntToServerChar(Board.blackQueen);
+		try {
+			// Get the piece's letter notation and add it to the return string
+			serverNotation += convertIntToServerChar(b.board[m.start.rank][m.start.file]);
+			// Get the file notation for the start row
+			serverNotation += fileIntegerToFile.get(m.start.file);
+			serverNotation += convertRowToServerRow(m.start.rank);
+			serverNotation += fileIntegerToFile.get(m.end.file);
+			serverNotation += convertRowToServerRow(m.end.rank);
+			// For promotion stuff
+			int color = MoveHandler.getColorOfPiece(b, m.start);
+			if (Board.isPawnPromotion(b, m, color)) {
+				// Just assume that we want to promote to the queen.
+				// Can tweak later if we feel inclined to do so.
+				if (color == Board.white) {
+					serverNotation += convertIntToServerChar(Board.whiteQueen);
+				} else if (color == Board.black) {
+					serverNotation += convertIntToServerChar(Board.blackQueen);
+				}
 			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 		return serverNotation;
 	}

@@ -21,7 +21,8 @@ public class MiniMax {
 
 		@Override
 		public Node call() throws Exception {
-			return maxValue(n, color, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			Node turn = maxValue(n, color, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+			return turn;
 		}
 	}
 
@@ -45,7 +46,8 @@ public class MiniMax {
 			}
 		}
 
-		if (move == null) {
+		if (move == null || move.m == null) {
+			System.out.println("This is null");
 			move = maxValue(root, color, 4, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		}
 		return move;
