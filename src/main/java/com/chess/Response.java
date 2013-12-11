@@ -38,6 +38,13 @@ public class Response {
 		this.lastmove = lastmove;
 	}
 
+	public Response(int secondsleft) {
+		this.ready = false;
+		this.secondsleft = secondsleft;
+		this.lastmovenumber = -1;
+		this.lastmove = "";
+	}
+
 	@Override
 	public String toString() {
 		return "Ready: " + this.ready +

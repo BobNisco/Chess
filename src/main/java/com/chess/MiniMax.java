@@ -3,21 +3,52 @@ package main.java.com.chess;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.concurrent.*;
 
 public class MiniMax {
 
-	public static Node performMiniMax(Board b, int color, int depth) {
-//		int numOfPiecesOnBoard = Board.totalNumberOfPieces(b);
-//		if (numOfPiecesOnBoard >= 20) {
-//			depth = 4;
-//		} else if (numOfPiecesOnBoard >= 10) {
-//			depth = 5;
-//		} else {
-//			depth = 6;
-//		}
-//		System.out.println("SEARCHING AT DEPTH " + depth);
+	public static class TimedJob implements Callable<Node> {
+
+		private Node n;
+		private int color;
+		private int depth;
+
+		public TimedJob(Node n, int color, int d) {
+			this.n = n;
+			this.color = color;
+			this.depth = d;
+		}
+
+		@Override
+		public Node call() throws Exception {
+			return maxValue(n, color, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		}
+	}
+
+	public static Node performMiniMax(Board b, int color, int depth, Response r) {
 		Node root = new Node(b, Integer.MIN_VALUE);
-		return maxValue(root, color, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		Node move = null;
+		if (r.secondsleft < 60) {
+			Future<Node> control = Executors.newSingleThreadExecutor().submit(new TimedJob(root, color, depth));
+
+			try {
+				// Try to get the result within 45 seconds
+				move = control.get(45, TimeUnit.SECONDS);
+			} catch (TimeoutException ex) {
+				// We went over the time, cancel the job
+				control.cancel(true);
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if (move == null) {
+			move = maxValue(root, color, 4, Integer.MIN_VALUE, Integer.MAX_VALUE);
+		}
+		return move;
 	}
 
 	private static Node maxValue(Node n, int color, int depth, int alpha, int beta) {

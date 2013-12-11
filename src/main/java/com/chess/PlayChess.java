@@ -96,7 +96,7 @@ public class PlayChess {
 				if (r.lastmove != null && r.lastmove.length() > 0) {
 					MoveHandler.handleMove(whiteTeam.board, r);
 				}
-				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, PlayChess.plyLookhead);
+				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, PlayChess.plyLookhead, r);
 				whiteTeam.move(MoveHandler.convertMoveToServerNotation(whiteTeam.board, nextNode.m));
 				whiteTeam.board.handleMove(nextNode.m);
 			}
@@ -110,7 +110,7 @@ public class PlayChess {
 				if (r.lastmove != null) {
 					MoveHandler.handleMove(blackTeam.board, r);
 				}
-				Node nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead);
+				Node nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead, r);
 				System.out.println(nextNode);
 				blackTeam.move(MoveHandler.convertMoveToServerNotation(blackTeam.board, nextNode.m));
 				blackTeam.board.handleMove(nextNode.m);
@@ -131,7 +131,7 @@ public class PlayChess {
 				if (r.lastmove != null && r.lastmove.length() > 0) {
 					MoveHandler.handleMove(ourTeam.board, r);
 				}
-				Node nextNode = MiniMax.performMiniMax(ourTeam.board, ourTeam.color, PlayChess.plyLookhead);
+				Node nextNode = MiniMax.performMiniMax(ourTeam.board, ourTeam.color, PlayChess.plyLookhead, r);
 				ourTeam.move(MoveHandler.convertMoveToServerNotation(ourTeam.board, nextNode.m));
 				ourTeam.board.handleMove(nextNode.m);
 			}
@@ -148,7 +148,7 @@ public class PlayChess {
 					System.out.println("Game over");
 					break;
 				}
-				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, PlayChess.plyLookhead);
+				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, PlayChess.plyLookhead, new Response(900));
 				whiteTeam.board.handleMove(nextNode.m);
 				System.out.println(whiteTeam.board + "\n\n");
 
@@ -177,7 +177,7 @@ public class PlayChess {
 				System.out.println("Game over");
 				break;
 			}
-			Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, PlayChess.plyLookhead);
+			Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, PlayChess.plyLookhead, new Response(900));
 			whiteTeam.board.handleMove(nextNode.m);
 			blackTeam.board.handleMove(nextNode.m);
 			System.out.println(whiteTeam.board + "\n\n");
@@ -187,7 +187,7 @@ public class PlayChess {
 				System.out.println("Game over");
 				break;
 			}
-			nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead);
+			nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead, new Response(900));
 			whiteTeam.board.handleMove(nextNode.m);
 			blackTeam.board.handleMove(nextNode.m);
 			System.out.println(blackTeam.board);
