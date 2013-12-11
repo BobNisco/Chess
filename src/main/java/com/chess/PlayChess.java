@@ -128,17 +128,6 @@ public class PlayChess {
 
 	private static void playAgainstOpponentOnServer(int gameId, int color, int teamNumber, String secret) {
 		PlayChess ourTeam = new PlayChess(color, gameId, teamNumber, secret);
-		int[][] b = {
-				{5, -2, 5, 0, 0, -3, 2, 0},
-				{0,0,0,0,0,0,0,-4},
-				{0,0,-1,0,-1,0,-6,0},
-				{-1,0,1,0,1,-1,-1,0},
-				{0,0,0,-1,0,0,0,-1},
-				{0,0,0,1,0,1,0,0},
-				{0,0,0,0,0,0,1,1},
-				{4,2,3,-5,6,3,2,4}
-		};
-		ourTeam.board.board = b;
 		while (true) {
 			System.out.println("POLLING AND MOVING FOR " + color);
 			Response r = ourTeam.poll();
@@ -250,8 +239,7 @@ public class PlayChess {
 		if (args.length > 0) {
 			playAgainstOpponentOnServer(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]), args[3]);
 		} else {
-			//playAgainstSelfOnServer(1084);
-			playAgainstOpponentOnServer(1092, Board.black, 110, "abbc1392");
+			playLocallyAgainstSelf();
 		}
 	}
 }
