@@ -2,7 +2,6 @@ package test.java.com.chess;
 
 import main.java.com.chess.Board;
 import main.java.com.chess.Evaluator;
-import main.java.com.chess.PieceEvaluation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -93,7 +92,6 @@ public class PieceEvaluationTest {
 		Board b = new Board();
 		b.board[6][1] = Board.empty;
 		int isolatedPawns = Evaluator.numberOfIsolatedPawns(b, Board.white);
-		System.out.println(b);
 		assertEquals(1, isolatedPawns);
 	}
 }

@@ -1,8 +1,6 @@
 package main.java.com.chess;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 import java.util.concurrent.*;
 
 public class MiniMax {
@@ -50,9 +48,6 @@ public class MiniMax {
 			System.out.println("This is null");
 			move = maxValue(root, color, 4, Integer.MIN_VALUE, Integer.MAX_VALUE);
 		}
-		if (move == null) {
-			System.out.println("WHY IS THIS STILL NULL");
-		}
 		return move;
 	}
 
@@ -67,8 +62,6 @@ public class MiniMax {
 		int opponentColor = Board.opponentColor(color);
 
 		ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(n.b, color);
-		long seed = System.nanoTime();
-		Collections.shuffle(actions, new Random(seed));
 		int numberOfSuccessors = actions.size();
 		for (Move m : actions) {
 			Board tempBoard = new Board(n.b);
@@ -96,8 +89,6 @@ public class MiniMax {
 		int opponentColor = Board.opponentColor(color);
 
 		ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(n.b, color);
-		long seed = System.nanoTime();
-		Collections.shuffle(actions, new Random(seed));
 		int numberOfSuccessors = actions.size();
 		for (Move m : actions) {
 			Board tempBoard = new Board(n.b);

@@ -97,9 +97,6 @@ public class PlayChess {
 					MoveHandler.handleMove(whiteTeam.board, r);
 				}
 				Node nextNode = MiniMax.performMiniMax(whiteTeam.board, whiteTeam.color, PlayChess.plyLookhead, r);
-				if (nextNode.m == null) {
-					System.out.println("NULL NEXT MOVE");
-				}
 				whiteTeam.move(MoveHandler.convertMoveToServerNotation(whiteTeam.board, nextNode.m));
 				whiteTeam.board.handleMove(nextNode.m);
 			}
@@ -114,9 +111,6 @@ public class PlayChess {
 					MoveHandler.handleMove(blackTeam.board, r);
 				}
 				Node nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead, r);
-				if (nextNode.m == null) {
-					System.out.println("NULL NEXT MOVE");
-				}
 				System.out.println(nextNode);
 				blackTeam.move(MoveHandler.convertMoveToServerNotation(blackTeam.board, nextNode.m));
 				blackTeam.board.handleMove(nextNode.m);
