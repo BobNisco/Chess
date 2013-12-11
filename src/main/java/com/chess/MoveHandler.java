@@ -104,6 +104,7 @@ public class MoveHandler {
 	public static String convertMoveToServerNotation(Board b, Move m) {
 		String serverNotation = "";
 		// Get the piece's letter notation and add it to the return string
+		// There was an NPE here, yo!
 		serverNotation += convertIntToServerChar(b.board[m.start.rank][m.start.file]);
 		// Get the file notation for the start row
 		serverNotation += fileIntegerToFile.get(m.start.file);

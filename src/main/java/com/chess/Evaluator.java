@@ -40,6 +40,8 @@ public class Evaluator {
 			// Handle number of legal successors for opponent
 			ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(b, opponentColor);
 			sum += 0.1 * (numberOfSuccessors - actions.size());
+			// Adjust for the color
+			sum *= color;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

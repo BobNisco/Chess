@@ -187,7 +187,7 @@ public class PlayChess {
 				System.out.println("Game over");
 				break;
 			}
-			nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, 2);
+			nextNode = MiniMax.performMiniMax(blackTeam.board, blackTeam.color, PlayChess.plyLookhead);
 			whiteTeam.board.handleMove(nextNode.m);
 			blackTeam.board.handleMove(nextNode.m);
 			System.out.println(blackTeam.board);

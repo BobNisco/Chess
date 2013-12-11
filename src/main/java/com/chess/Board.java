@@ -210,6 +210,18 @@ public class Board {
 		return num;
 	}
 
+	public static int totalNumberOfPieces(Board b) {
+		int sum = 0;
+		for (int i = 0; i < b.board.length; i++) {
+			for (int j = 0; j < b.board[i].length; j++) {
+				if (b.board[i][j] != Board.empty) {
+					sum++;
+				}
+			}
+		}
+		return sum;
+	}
+
 	/**
 	 * Returns the integer for your opponent's color
 	 * @param color your color

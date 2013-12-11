@@ -1,10 +1,21 @@
 package main.java.com.chess;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class MiniMax {
 
 	public static Node performMiniMax(Board b, int color, int depth) {
+//		int numOfPiecesOnBoard = Board.totalNumberOfPieces(b);
+//		if (numOfPiecesOnBoard >= 20) {
+//			depth = 4;
+//		} else if (numOfPiecesOnBoard >= 10) {
+//			depth = 5;
+//		} else {
+//			depth = 6;
+//		}
+//		System.out.println("SEARCHING AT DEPTH " + depth);
 		Node root = new Node(b, Integer.MIN_VALUE);
 		return maxValue(root, color, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
 	}
@@ -20,6 +31,8 @@ public class MiniMax {
 		int opponentColor = Board.opponentColor(color);
 
 		ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(n.b, color);
+		long seed = System.nanoTime();
+		Collections.shuffle(actions, new Random(seed));
 		int numberOfSuccessors = actions.size();
 		for (Move m : actions) {
 			Board tempBoard = new Board(n.b);
@@ -47,6 +60,8 @@ public class MiniMax {
 		int opponentColor = Board.opponentColor(color);
 
 		ArrayList<Move> actions = GenerateSuccessors.allPossibleSuccessors(n.b, color);
+		long seed = System.nanoTime();
+		Collections.shuffle(actions, new Random(seed));
 		int numberOfSuccessors = actions.size();
 		for (Move m : actions) {
 			Board tempBoard = new Board(n.b);
